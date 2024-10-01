@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: asos_DB
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./src/main/resources/init-sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5434:5432"
