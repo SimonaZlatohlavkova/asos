@@ -17,9 +17,8 @@ const validationSchema = Yup.object({
     surname: Yup.string().required('Surname is required').max(100, 'Surname can have max 100 characters.'),
     password: Yup.string().required('Password is required').matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=]).{8,}$/,
-        'Must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character @#$%^&+= '
+        'Not valid password'
     ).max(100, 'Password can have max 100 characters.'),
-    publicKey: Yup.string().required('Public Key is required')
 });
 
 const url = process.env.REACT_APP_API_URL;
@@ -81,10 +80,12 @@ export const RegistrationForm = () => {
         }
     };
 
+
+    //Must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character @#$%^&+=
+
     return (
         <Grid
             container
-            spacing={2}
             direction="column"
             alignItems="center"
             justifyContent="center"
@@ -109,6 +110,18 @@ export const RegistrationForm = () => {
                                     onChange={formik.handleChange}
                                     error={formik.touched.name && Boolean(formik.errors.name)}
                                     helperText={formik.touched.name && formik.errors.name}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Tooltip
+                                                    title="Your first name">
+                                                    <IconButton aria-label="Information">
+                                                        <InfoIcon/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </InputAdornment>
+                                        ),
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12} md={12}>
@@ -121,6 +134,18 @@ export const RegistrationForm = () => {
                                     onChange={formik.handleChange}
                                     error={formik.touched.surname && Boolean(formik.errors.surname)}
                                     helperText={formik.touched.surname && formik.errors.surname}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Tooltip
+                                                    title="Your surename">
+                                                    <IconButton aria-label="Information">
+                                                        <InfoIcon/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </InputAdornment>
+                                        ),
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12} md={12}>
@@ -133,6 +158,18 @@ export const RegistrationForm = () => {
                                     onChange={formik.handleChange}
                                     error={formik.touched.email && Boolean(formik.errors.email)}
                                     helperText={formik.touched.email && formik.errors.email}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Tooltip
+                                                    title="Must contain valid e-mail address">
+                                                    <IconButton aria-label="Information">
+                                                        <InfoIcon/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </InputAdornment>
+                                        ),
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12} md={12}>
@@ -146,6 +183,19 @@ export const RegistrationForm = () => {
                                     onChange={formik.handleChange}
                                     error={formik.touched.password && Boolean(formik.errors.password)}
                                     helperText={formik.touched.password && formik.errors.password}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Tooltip
+                                                    title="Must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character @#$%^&+=
+">
+                                                    <IconButton aria-label="Information">
+                                                        <InfoIcon/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </InputAdornment>
+                                        ),
+                                    }}
                                 />
                             </Grid>
 
