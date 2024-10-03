@@ -37,7 +37,7 @@ const dummyProducts = [{
     originalPrice: 1.19,
     currency: "€",
     salePrice: null
-},{
+}, {
     id: 4,
     name: "Yogurt Jogobela",
     url: "https://lunys.sk/wp-content/uploads/2023/03/640015ea09c28.jpg",
@@ -45,7 +45,7 @@ const dummyProducts = [{
     originalPrice: 0.76,
     currency: "€",
     salePrice: null
-},{
+}, {
     id: 5,
     name: "Yogurt Pribinacik",
     url: "https://images-polarfood-cdn.rshop.sk/lg/products/796d9ec06da7d5b306b997531753f733.jpg",
@@ -53,6 +53,22 @@ const dummyProducts = [{
     originalPrice: 0.89,
     currency: "€",
     salePrice: 0.50
+}, {
+    id: 6,
+    name: "Yogurt Greek",
+    url: "https://cdn.mafrservices.com/sys-master-root/ha9/h4a/16000929464350/1590713_main.jpg?im=Resize=1700",
+    description: "100% milk",
+    originalPrice: 0.80,
+    currency: "€",
+    salePrice: null
+}, {
+    id: 7,
+    name: "Yogurt Parmalat",
+    url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTioE4Tg7CS6POKbpDQ3yebxDo2dyPPX7gowA&s",
+    description: "60% milk, 5% sugar, 20% raspberry jam, 15% strawberry jam",
+    originalPrice: 0.95,
+    currency: "€",
+    salePrice: 0.65
 }]
 
 export const ProductsPage = () => {
@@ -71,13 +87,20 @@ export const ProductsPage = () => {
 
     return (
 
-        <Box sx={{paddingLeft: '10vw', paddingRight: '10vw', marginTop: '100px', marginLeft: '2%', marginRight: '2%', paddingBottom:"1rem"}}>
+        <Box sx={{
+            paddingLeft: '10vw',
+            paddingRight: '10vw',
+            marginTop: '100px',
+            marginLeft: '2%',
+            marginRight: '2%',
+            paddingBottom: "1rem"
+        }}>
             <form onSubmit={formik.handleSubmit}>
                 <Grid
                     container
                     spacing={2}
                 >
-                    <Grid item xs={12} md={2} lg={2} >
+                    <Grid item xs={12} md={2} lg={2}>
                         <img src={logo} alt="Logo" style={{height: "7vh"}}/>
                     </Grid>
                     <Grid item xs={12} md={10} lg={10}>
@@ -115,12 +138,12 @@ export const ProductsPage = () => {
                 </Grid>
             </form>
             <Grid
-                style={{marginTop:'2rem'}}
+                style={{marginTop: '2rem'}}
                 container
                 spacing={2}
             >
                 {dummyProducts.length > 0 && dummyProducts.map((prod) => {
-                    return <Grid item xs={12} md={6} lg={3}>
+                    return <Grid item xs={12} md={4} lg={3}>
                         <ProductCard key={prod.id} product={prod}></ProductCard>
                     </Grid>
                 })}

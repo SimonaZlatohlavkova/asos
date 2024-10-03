@@ -33,10 +33,7 @@ const Navbar = () => {
         setDrawerOpen(open);
     };
 
-    const handleSignOut = () => {
-        removeCookie('auth');
-        navigate('/signin');
-    };
+
 
 
     const drawerContent = (
@@ -84,13 +81,10 @@ const Navbar = () => {
                         </>
                     )}
                     {!getCookie('auth') && (<>
-                            <Button
-                                variant="outlined"
-                                style={{color: 'white'}}
-                                onClick={handleSignOut}
-                            >
-                                Sign Out
-                            </Button>
+                            <Link component={RouterLink}  to="/products/search" color="inherit" underline="none"
+                                  sx={{p: 1}}>
+                                QuickHarvest Online shop
+                            </Link>
                             <Box flexGrow={1} />
                             <Link component={RouterLink}  to="/profile" color="inherit" underline="none"
                                   sx={{p: 1}}>

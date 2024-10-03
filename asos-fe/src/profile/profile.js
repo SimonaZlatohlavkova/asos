@@ -5,8 +5,15 @@ import React from "react";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 import accountLogo from "../account-circle-svgrepo-com (1).svg";
+import {removeCookie} from "../App";
+import {useNavigate} from "react-router-dom";
 
 export const Profile = () => {
+    const navigate = useNavigate();
+    const handleSignOut = () => {
+        removeCookie('auth');
+        navigate('/signin');
+    };
     return (<>
         <Box sx={{paddingLeft: '10vw', paddingRight: '10vw', marginTop: '100px', marginLeft: '2%', marginRight: '2%'}}>
             <Grid
@@ -21,14 +28,22 @@ export const Profile = () => {
                         <Box
                             sx={{
                                 display: 'flex',
+                                flexDirection:'column',
                                 justifyContent: 'center', // Centers horizontally
                                 alignItems: 'center', // Centers vertically
                                 height: '100%', // Ensure the Box takes the full height of the Paper
                             }}
                         >
 
-                            <img src={accountLogo} alt="Logo" style={{height: 70, paddingTop:'15%',paddingBottom:'15%', }}/>
+                            <img src={accountLogo} alt="Logo" style={{height: 70, paddingTop:'5%',paddingBottom:'5%', }}/>
 
+                            <Button
+                                variant="contained"
+
+                                onClick={handleSignOut}
+                            >
+                                Sign Out
+                            </Button>
                         </Box>
 
                     </Paper>
