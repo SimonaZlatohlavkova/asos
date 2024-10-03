@@ -9,6 +9,8 @@ import {Container, createTheme, ThemeProvider} from "@mui/material";
 import {green} from "@mui/material/colors";
 import {CartPage} from "./cart/cart";
 import {ProductsPage} from "./products/poduts-page";
+import {Profile} from "./profile/profile";
+
 
 
 const theme = createTheme({
@@ -80,6 +82,7 @@ function App() {
                             <Route exact path="/signin" element={<SignInForm></SignInForm>}></Route>
                             <Route exact path="/cart" element={<CartPage></CartPage>}></Route>
                             <Route exact path="/products/search" element={<ProductsPage></ProductsPage>}/>
+                            <Route path="/profile" element={<Profile></Profile>}/>
                             <Route path="/" element={<Navigate to="/home"/>}/>
                         </Routes>
                     </Router>

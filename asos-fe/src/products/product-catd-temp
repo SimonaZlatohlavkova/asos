@@ -2,10 +2,10 @@ import {Button, Card, CardContent, CardMedia, Grid, Typography} from "@mui/mater
 import StarIcon from '@mui/icons-material/Star';
 import {useNavigate} from "react-router-dom";
 
-export const AccommodationCard = (props) => {
+export const ProductCard = (props) => {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate("/accommodation/detail/"+ props.accommodation.id)
+        navigate("/product/detail/"+ props.product.id)
 
     }
     return (<>
@@ -14,15 +14,15 @@ export const AccommodationCard = (props) => {
                 <CardMedia
                     component="img"
                     sx={{width: 160}}
-                    image={props.accommodation.url}
-                    alt="accommodation"
+                    image={props.product.url}
+                    alt="product"
                 />
                 <CardContent sx={{flex: '1 0 auto'}}>
                     <Grid container justifyContent="space-between" alignItems="flex-end">
                         <Typography component="div" variant="h5">
-                            {props.accommodation.name}
+                            {props.product.name}
                         </Typography>
-                        {props.accommodation.top &&
+                        {props.product.top &&
                             <Typography variant="body2" style={{fontWeight: 'bold', color: 'black'}}>
                                 <StarIcon> </StarIcon>
                             </Typography>
@@ -30,15 +30,15 @@ export const AccommodationCard = (props) => {
                     </Grid>
 
                     <Typography variant="body2" color="text.secondary">
-                        {props.accommodation.address}
+                        {props.product.price}
                     </Typography>
                     <Typography variant="body4" color="text.secondary">
-                        {props.accommodation.description}
+                        {props.product.description}
                     </Typography>
                     <Grid container justifyContent="space-between" alignItems="flex-end">
                         <Button variant="contained" style={{marginTop: '0.3rem'}} onClick={handleClick}>More</Button>
                         <Typography component="div" variant="h5">
-                            {props.accommodation.price} €
+                            {props.product.price} €
                         </Typography>
                     </Grid>
                 </CardContent>

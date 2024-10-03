@@ -18,6 +18,7 @@ import * as PropTypes from "prop-types";
 import {getCookie, removeCookie} from "../App";
 import logo from '../llgo.png';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 Button.propTypes = {children: PropTypes.node};
 
@@ -70,7 +71,7 @@ const Navbar = () => {
                     </IconButton>
                     <Typography></Typography> */}
 
-                    {!getCookie('auth') && (
+                    {getCookie('auth') && (
                         <>
                             <Link component={RouterLink} to="/registration" color="inherit" underline="none"
                                   sx={{p: 1}}>
@@ -82,7 +83,7 @@ const Navbar = () => {
 
                         </>
                     )}
-                    {getCookie('auth') && (<>
+                    {!getCookie('auth') && (<>
                             <Button
                                 variant="outlined"
                                 style={{color: 'white'}}
@@ -90,7 +91,12 @@ const Navbar = () => {
                             >
                                 Sign Out
                             </Button>
-                            <Link component={RouterLink} to="/cart" color="inherit" underline="none"
+                            <Box flexGrow={1} />
+                            <Link component={RouterLink}  to="/profile" color="inherit" underline="none"
+                                  sx={{p: 1}}>
+                                <AccountCircleOutlinedIcon></AccountCircleOutlinedIcon>
+                            </Link>
+                            <Link component={RouterLink}  to="/cart" color="inherit" underline="none"
                                   sx={{p: 1}}>
                                 <ShoppingCartOutlinedIcon></ShoppingCartOutlinedIcon>
                             </Link>
