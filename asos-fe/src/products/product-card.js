@@ -58,20 +58,6 @@ export const ProductCard = (props) => {
                             sx={{alignSelf: 'flex-end',}} // Button aligned to the left
                             onClick={handleClick}
                         >
-                            <AddCircleIcon></AddCircleIcon>
-                        </Button>
-                        <Button
-                            variant="contained"
-                            sx={{alignSelf: 'flex-end',}} // Button aligned to the left
-                            onClick={handleClick}
-                        >
-                            <AddCircleIcon></AddCircleIcon>
-                        </Button>
-                        <Button
-                            variant="contained"
-                            sx={{alignSelf: 'flex-end',}} // Button aligned to the left
-                            onClick={handleClick}
-                        >
                             <AddShoppingCartOutlinedIcon></AddShoppingCartOutlinedIcon>
                         </Button>
                         {props.product.salePrice != null ? <Box style={{backgroundColor: "#ff1313", padding: "1rem", borderRadius: '3px',boxShadow: "5px 5px #888888"}}>
