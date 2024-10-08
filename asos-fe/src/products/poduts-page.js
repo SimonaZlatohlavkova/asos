@@ -33,7 +33,7 @@ const dummyProducts = [{
     id: 3,
     name: "Yogurt Danette",
     url: "https://digitalcontent.api.tesco.com/v2/media/ghs/8ee08181-50e6-40b2-8f0c-f0e3d5aa2c4a/443e9ae8-18de-4786-a918-f29198f621f0_121963493.jpeg?h=540&w=540",
-    description: "50% milk, 10% dried banana powder, 23% pudding powder,  12% chocolate",
+    description: "50% milk, 10% dried banana powder, 12% chocolate",
     originalPrice: 1.19,
     stock:8,
     salePrice: null
@@ -43,7 +43,7 @@ const dummyProducts = [{
     url: "https://lunys.sk/wp-content/uploads/2023/03/640015ea09c28.jpg",
     description: "70% milk,  25% cherry, 5% sugar ",
     originalPrice: 0.76,
-    stock:8,
+    stock:4,
     salePrice: null
 }, {
     id: 5,
@@ -51,7 +51,7 @@ const dummyProducts = [{
     url: "https://images-polarfood-cdn.rshop.sk/lg/products/796d9ec06da7d5b306b997531753f733.jpg",
     description: "80% milk,  15% vanilla extract, 5% sugar ",
     originalPrice: 0.89,
-    stock:8,
+    stock:0,
     salePrice: 0.50
 }, {
     id: 6,
@@ -65,9 +65,9 @@ const dummyProducts = [{
     id: 7,
     name: "Yogurt Parmalat",
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTioE4Tg7CS6POKbpDQ3yebxDo2dyPPX7gowA&s",
-    description: "60% milk, 5% sugar, 20% raspberry jam, 15% strawberry jam",
+    description: "60% milk, 5% sugar, 20% raspberry jam",
     originalPrice: 0.95,
-    stock:8,
+    stock:12,
     salePrice: 0.65
 }]
 

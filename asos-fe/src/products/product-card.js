@@ -1,13 +1,28 @@
-import {Box, Button, Card, CardContent, CardMedia, Grid, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardMedia,
+    Grid,
+    InputAdornment,
+    TextField,
+    Tooltip,
+    Typography
+} from "@mui/material";
 import StarIcon from '@mui/icons-material/Star';
 import {useNavigate} from "react-router-dom";
-import React from "react";
+import React, {useState} from "react";
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import IconButton from '@mui/material/IconButton';
+import InfoIcon from "@mui/icons-material/Info";
+import Stack from '@mui/material/Stack';
 
 export const ProductCard = (props) => {
     const navigate = useNavigate();
+    const [number, setNumber] = useState(0)
     const handleClick = () => {
         navigate("/product/detail/" + props.product.id);
     }
@@ -19,7 +34,7 @@ export const ProductCard = (props) => {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
-                    minHeight: '400px' // Ensures uniform card height
+                    minHeight: '420px' // Ensures uniform card height
                 }}
             >
                 {/* Product Image */}
@@ -49,28 +64,63 @@ export const ProductCard = (props) => {
                         <Typography variant="body2" color="text.secondary" gutterBottom>
                             {props.product.description}
                         </Typography>
+                        {props.product.stock >0 ?<Typography variant="body2" color="text.secondary" >
+                            Available {props.product.stock} pc
+                        </Typography> : <Typography variant="body2" color="#ff1313" >
+                           Out of stock
+                        </Typography>}
                     </Box>
 
                     {/* Button and Price at the bottom */}
                     <Grid container justifyContent="space-between" alignItems="center">
-                        <Button
-                            variant="contained"
-                            sx={{alignSelf: 'flex-end',}} // Button aligned to the left
-                            onClick={handleClick}
-                        >
-                            <AddShoppingCartOutlinedIcon></AddShoppingCartOutlinedIcon>
-                        </Button>
-                        {props.product.salePrice != null ? <Box style={{backgroundColor: "#ff1313", padding: "1rem", borderRadius: '3px',boxShadow: "5px 5px #888888"}}>
-                                <Typography component="div" variant="subtitle2" sx={{ textDecoration: 'line-through'}}>
+                        <Stack directino={"column"} alignItems="center">
+                            <Stack direction={"row"} spacing={1} alignItems="center">
+                                <IconButton
+                                    disabled={number <= 0}
+                                    onClick={() => {
+                                        setNumber(number - 1)
+                                    }}
+                                >
+                                    <RemoveCircleIcon></RemoveCircleIcon>
+                                </IconButton>
+                                <div>{number}</div>
+                                <IconButton
+                                    disabled={number >= props.product.stock}
+                                    onClick={() => {
+                                        setNumber(number + 1)
+                                    }}
+                                >
+                                    <AddCircleIcon></AddCircleIcon>
+                                </IconButton>
+                            </Stack>
+                            <Button
+                                variant="contained"
+                                onClick={handleClick}
+                            >
+                                <AddShoppingCartOutlinedIcon></AddShoppingCartOutlinedIcon>
+                            </Button>
+                        </Stack>
+                        {props.product.salePrice != null ? <Box style={{
+                                backgroundColor: "#ff1313",
+                                padding: "1rem",
+                                borderRadius: '3px',
+                                boxShadow: "5px 5px #888888"
+                            }}>
+                                <Typography component="div" variant="subtitle2" sx={{textDecoration: 'line-through'}}>
                                     {props.product.originalPrice.toFixed(2)} €
                                 </Typography>
-                                <Typography component="div" variant="h6"  sx={{ fontWeight:"bold", color:"white"}}>
+                                <Typography component="div" variant="h6" sx={{fontWeight: "bold", color: "white"}}>
                                     {props.product.salePrice.toFixed(2)} €
                                 </Typography>
 
 
                             </Box> :
-                            <Box style={{backgroundColor: "#fffefe", padding: "1rem", borderRadius: '3px', border: "1px solid gray"}}>
+                            <Box style={{
+                                backgroundColor: "#fffefe",
+                                padding: "1rem",
+                                borderRadius: '3px',
+                                border: "1px solid gray"
+                            }}>
                                 <Typography component="div" variant="h6">
                                     {props.product.originalPrice.toFixed(2)} €
                                 </Typography>
