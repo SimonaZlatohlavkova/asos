@@ -1,0 +1,235 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: API documentation for a simple API.
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+    description: Main API server
+paths:
+  /login:
+    post:
+      summary: Log in the user
+      description: Returns a list of all registered users.
+      requestBody:
+        content:
+          application/json:
+              example:
+                password: "password"
+                email: "johndoe@example.com"
+      responses:
+        '200':
+          description: Authorization token
+          content:
+            application/json:
+             example:
+               jwt: "jwtTOKEN"
+        '400':
+          description: "Wrong login or password"
+  /signup:
+    post:
+      summary: User registration
+      description: User registration
+      requestBody:
+        content:
+          application/json:
+            example:
+              email: "e@gmail.com"
+              name: "Name"
+              surname: "Surname"
+              password: "password1254"
+      responses:
+        '201':
+          description: "User registered"
+        '400':
+          description: "Wrong request"
+  /product/filter:
+    post:
+      summary: Product filter
+      description: Filter out needed products
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: "Yogurt"
+      responses:
+        '200':
+          description: "User registered"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Yogurt"
+                    url:
+                      type: string
+                      format: url
+                      example: "https://obrazok.sk"
+                    description:
+                      type: string
+                      example: "88% milk, 2% strawberry, 10% chocolate"
+                    originalPrice:
+                      type: number
+                      format: float
+                      example: 1.20
+                    salePrice:
+                      type: number
+                      format: float
+                      nullable: true
+                      example: 0.89
+                    stock:
+                      type: number
+                      nullable: true
+                      example: 8
+
+
+        '400':
+          description: "Wrong request"
+  /orders:
+    get:
+      summary: Users orders
+      description: Get orders from user
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: "Orders"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    date:
+                      type: string
+                      format: date
+                    summarization:
+                      type: number
+                      format: float
+                      example: 103.5
+                    deliveryCost:
+                      type: number
+                      format: float
+                      example: 3.5
+                    address:
+                        type: object
+                        properties:
+                          street:
+                            type: string
+                            example: "Dlhá ulica"
+                          houseNumber:
+                            type: string
+                            example: "38/28P"
+                          postCode:
+                            type: string
+                            example: "91943"
+                          country:
+                            type: string
+                            example: "Slovakia"
+                    status:
+                      type: string
+                      enum:
+                        - pending
+                        - completed
+                        - cancelled
+                      example: "completed"
+                    products:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          price:
+                            type: number
+                            format: float
+                            example: 1.4
+                          quantity:
+                            type: number
+                            format: integer
+                            example: 2
+                          name:
+                            type: string
+                            example: "Yogurt"
+                          url:
+                            type: string
+                            example: "http:/obrazok.sk"
+
+
+
+        '400':
+          description: "Wrong request"
+
+  /order:
+    post:
+      summary: Users orders
+      description: Get orders from user
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  address:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                        example: "Dlhá ulica"
+                      houseNumber:
+                        type: string
+                        example: "38/28P"
+                      postCode:
+                        type: string
+                        example: "91943"
+                      country:
+                        type: string
+                        example: "Slovakia"
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        price:
+                          type: number
+                          format: float
+                          example: 1.4
+                        quantity:
+                          type: number
+                          format: integer
+                          example: 2
+
+
+      responses:
+        '200':
+          description: "order created"
+        '400':
+          description: "Wrong request"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

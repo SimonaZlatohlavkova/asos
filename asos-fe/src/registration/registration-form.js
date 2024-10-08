@@ -33,7 +33,6 @@ export const RegistrationForm = () => {
             name: '',
             surname: '',
             password: '',
-            publicKey: ''
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
@@ -60,7 +59,7 @@ export const RegistrationForm = () => {
 
     const postToBE = async (values) => {
         try {
-            const response = await fetch(url + '/api/register', {
+            const response = await fetch(url + '/api/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

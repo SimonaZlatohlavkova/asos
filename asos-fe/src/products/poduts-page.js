@@ -19,7 +19,7 @@ const dummyProducts = [{
     url: "https://res.cloudinary.com/riqra/image/upload/w_656,h_656,c_limit,q_auto,f_auto/v1695769979/sellers/9/rlzngadefxo9zlc0zigq.webp",
     description: "88% milk, 2% strawberry, 10% chocolate",
     originalPrice: 1.20,
-    currency: "€",
+    stock:8,
     salePrice: 0.89
 }, {
     id: 2,
@@ -27,7 +27,7 @@ const dummyProducts = [{
     url: "https://www.dairyfoods.com/ext/resources/eNews/2012-01-np1-422.gif?1327517141",
     description: "88% milk, 12% chocolate",
     originalPrice: 0.90,
-    currency: "€",
+    stock:8,
     salePrice: 0.50
 }, {
     id: 3,
@@ -35,7 +35,7 @@ const dummyProducts = [{
     url: "https://digitalcontent.api.tesco.com/v2/media/ghs/8ee08181-50e6-40b2-8f0c-f0e3d5aa2c4a/443e9ae8-18de-4786-a918-f29198f621f0_121963493.jpeg?h=540&w=540",
     description: "50% milk, 10% dried banana powder, 23% pudding powder,  12% chocolate",
     originalPrice: 1.19,
-    currency: "€",
+    stock:8,
     salePrice: null
 }, {
     id: 4,
@@ -43,7 +43,7 @@ const dummyProducts = [{
     url: "https://lunys.sk/wp-content/uploads/2023/03/640015ea09c28.jpg",
     description: "70% milk,  25% cherry, 5% sugar ",
     originalPrice: 0.76,
-    currency: "€",
+    stock:8,
     salePrice: null
 }, {
     id: 5,
@@ -51,7 +51,7 @@ const dummyProducts = [{
     url: "https://images-polarfood-cdn.rshop.sk/lg/products/796d9ec06da7d5b306b997531753f733.jpg",
     description: "80% milk,  15% vanilla extract, 5% sugar ",
     originalPrice: 0.89,
-    currency: "€",
+    stock:8,
     salePrice: 0.50
 }, {
     id: 6,
@@ -59,7 +59,7 @@ const dummyProducts = [{
     url: "https://cdn.mafrservices.com/sys-master-root/ha9/h4a/16000929464350/1590713_main.jpg?im=Resize=1700",
     description: "100% milk",
     originalPrice: 0.80,
-    currency: "€",
+    stock:8,
     salePrice: null
 }, {
     id: 7,
@@ -67,7 +67,7 @@ const dummyProducts = [{
     url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTioE4Tg7CS6POKbpDQ3yebxDo2dyPPX7gowA&s",
     description: "60% milk, 5% sugar, 20% raspberry jam, 15% strawberry jam",
     originalPrice: 0.95,
-    currency: "€",
+    stock:8,
     salePrice: 0.65
 }]
 
@@ -99,11 +99,11 @@ export const ProductsPage = () => {
                 <Grid
                     container
                     spacing={2}
-                >
+                >{/*
                     <Grid item xs={12} md={2} lg={2}>
                         <img src={logo} alt="Logo" style={{height: "7vh"}}/>
-                    </Grid>
-                    <Grid item xs={12} md={10} lg={10}>
+                    </Grid>*/}
+                    <Grid item xs={12} md={12} lg={12}>
                         <TextField
                             id="name"
                             name="name"

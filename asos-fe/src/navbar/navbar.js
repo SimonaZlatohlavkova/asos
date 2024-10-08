@@ -19,6 +19,7 @@ import {getCookie, removeCookie} from "../App";
 import logo from '../llgo.png';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import logoQ from "../sss.png";
 
 Button.propTypes = {children: PropTypes.node};
 
@@ -83,7 +84,8 @@ const Navbar = () => {
                     {!getCookie('auth') && (<>
                             <Link component={RouterLink}  to="/products/search" color="inherit" underline="none"
                                   sx={{p: 1}}>
-                                QuickHarvest Online shop
+                                <img src={logoQ} alt="Logo" style={{height: 60}}/>
+
                             </Link>
                             <Box flexGrow={1} />
                             <Link component={RouterLink}  to="/profile" color="inherit" underline="none"
