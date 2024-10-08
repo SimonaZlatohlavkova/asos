@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 
 paths:
-  /login:
+  /user/login:
     post:
       summary: Log in the user
       description: Returns a list of all registered users.
@@ -24,7 +24,7 @@ paths:
                jwt: "jwtTOKEN"
         '400':
           description: "Wrong login or password"
-  /signup:
+  /user/signup:
     post:
       summary: User registration
       description: User registration
@@ -41,58 +41,7 @@ paths:
           description: "User registered"
         '400':
           description: "Wrong request"
-  /product/filter:
-    post:
-      summary: Product filter
-      description: Filter out needed products
-      security:
-        - bearerAuth: [ ]
-      requestBody:
-        content:
-          application/json:
-            example:
-              name: "Yogurt"
-      responses:
-        '200':
-          description: "filtered products"
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      example: 1
-                    name:
-                      type: string
-                      example: "Yogurt"
-                    url:
-                      type: string
-                      format: url
-                      example: "https://obrazok.sk"
-                    description:
-                      type: string
-                      example: "88% milk, 2% strawberry, 10% chocolate"
-                    originalPrice:
-                      type: number
-                      format: float
-                      example: 1.20
-                    salePrice:
-                      type: number
-                      format: float
-                      nullable: true
-                      example: 0.89
-                    stock:
-                      type: number
-                      nullable: true
-                      example: 8
-
-
-        '400':
-          description: "Wrong request"
-  /orders:
+  /user/orders:
     get:
       summary: Users orders
       description: Get orders from user
@@ -175,6 +124,25 @@ paths:
         '400':
           description: "Wrong request"
 
+
+  /user/profile:
+    get:
+      summary: User info
+      security:
+        - bearerAuth: [ ]
+      description: Get users information
+      responses:
+        '200':
+          description: "Users information's"
+          content:
+            application/json:
+              example:
+                name: "Name"
+                surname: "Surname"
+                email: "email@gmail.com"
+        '400':
+          description: "Wrong request"
+
   /order:
     post:
       summary: Order from user
@@ -228,23 +196,58 @@ paths:
         '400':
           description: "Wrong request"
 
-  /profile:
-    get:
-      summary: User info
+  /product/filter:
+    post:
+      summary: Product filter
+      description: Filter out needed products
       security:
         - bearerAuth: [ ]
-      description: Get users information
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: "Yogurt"
       responses:
         '200':
-          description: "Users information's"
+          description: "filtered products"
           content:
             application/json:
-              example:
-                name: "Name"
-                surname: "Surname"
-                email: "email@gmail.com"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Yogurt"
+                    url:
+                      type: string
+                      format: url
+                      example: "https://obrazok.sk"
+                    description:
+                      type: string
+                      example: "88% milk, 2% strawberry, 10% chocolate"
+                    originalPrice:
+                      type: number
+                      format: float
+                      example: 1.20
+                    salePrice:
+                      type: number
+                      format: float
+                      nullable: true
+                      example: 0.89
+                    stock:
+                      type: number
+                      nullable: true
+                      example: 8
+
+
         '400':
           description: "Wrong request"
+
 
 components:
   securitySchemes:
