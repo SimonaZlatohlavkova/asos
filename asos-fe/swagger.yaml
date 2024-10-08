@@ -56,7 +56,7 @@ paths:
               name: "Yogurt"
       responses:
         '200':
-          description: "User registered"
+          description: "filtered products"
           content:
             application/json:
               schema:
@@ -176,8 +176,8 @@ paths:
 
   /order:
     post:
-      summary: Users orders
-      description: Get orders from user
+      summary: Order from user
+      description: Make order
       security:
         - bearerAuth: [ ]
       requestBody:
@@ -224,6 +224,24 @@ paths:
       responses:
         '200':
           description: "order created"
+        '400':
+          description: "Wrong request"
+
+  /profile:
+    get:
+      summary: User info
+      security:
+        - bearerAuth: [ ]
+      description: Get users information
+      responses:
+        '200':
+          description: "Users information's"
+          content:
+            application/json:
+              example:
+                name: "Name"
+                surname: "Surname"
+                email: "email@gmail.com"
         '400':
           description: "Wrong request"
 
