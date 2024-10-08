@@ -134,6 +134,9 @@ paths:
                           postCode:
                             type: string
                             example: "91943"
+                          city:
+                            type: string
+                            example: "Humenné"
                           country:
                             type: string
                             example: "Slovakia"

@@ -3,6 +3,8 @@ import StarIcon from '@mui/icons-material/Star';
 import {useNavigate} from "react-router-dom";
 import React from "react";
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
 export const ProductCard = (props) => {
     const navigate = useNavigate();
@@ -51,6 +53,20 @@ export const ProductCard = (props) => {
 
                     {/* Button and Price at the bottom */}
                     <Grid container justifyContent="space-between" alignItems="center">
+                        <Button
+                            variant="contained"
+                            sx={{alignSelf: 'flex-end',}} // Button aligned to the left
+                            onClick={handleClick}
+                        >
+                            <AddCircleIcon></AddCircleIcon>
+                        </Button>
+                        <Button
+                            variant="contained"
+                            sx={{alignSelf: 'flex-end',}} // Button aligned to the left
+                            onClick={handleClick}
+                        >
+                            <AddCircleIcon></AddCircleIcon>
+                        </Button>
                         <Button
                             variant="contained"
                             sx={{alignSelf: 'flex-end',}} // Button aligned to the left
