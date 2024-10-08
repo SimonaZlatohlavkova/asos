@@ -1,10 +1,7 @@
 package products.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Column;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +19,6 @@ public class ProductInventory {
     @Column(nullable = false)
     private Long productId;
 
-    private int availableQuantity;
+    private int stock;
 }
 

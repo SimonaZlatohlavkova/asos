@@ -10,12 +10,6 @@ CREATE TABLE Product (
                          categoryName VARCHAR(255) NOT NULL
 );
 
--- Create ProductCategory Table
-CREATE TABLE ProductCategory (
-                                 code VARCHAR(50) PRIMARY KEY,
-                                 name VARCHAR(255) NOT NULL
-);
-
 -- Create ProductInventory Table
 CREATE TABLE ProductInventory (
                                   id BIGSERIAL PRIMARY KEY,  -- Automatically generates ID
