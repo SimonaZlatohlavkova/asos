@@ -91,12 +91,12 @@ export const RegistrationForm = () => {
             style={{minHeight: '100vh', width: '100%'}}
         >
             <Grid item xs={12} sm={12} md={12} >
-                <Paper elevation={3} style={{padding: '30px', borderRadius: '10px'}}>
+                <Paper elevation={3} style={{padding: '30px', borderRadius: '10px', marginTop:'15%'}}>
                     <form onSubmit={formik.handleSubmit}>
                         <Grid container spacing={2} direction="column" alignItems="center">
                                 <Grid item xs={1} md={1} lg={1}  sx={{alignItems:'center',
                                     justifyContent: 'center', justifySelf:'center', alignSelf:'center'}}>
-                                    <img src={logo} alt="Logo" style={{height: 70, paddingTop:'15%',paddingBottom:'15%'}}/>
+                                    <img src={logo} alt="Logo" style={{height: 40, paddingTop:'15%',paddingBottom:'15%'}}/>
                                 </Grid>
 
                             <Grid item xs={12} md={12}>
