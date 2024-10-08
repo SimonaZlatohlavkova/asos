@@ -11,9 +11,7 @@ public class Product {
     private String name;
     private String brand;
     private String imageUrl;
-    private double price;
+    private double originalPrice;
     private double weight;
-    private String productComposition;
-    @Column(nullable = false)
-    private String categoryName;
+    private String description;
 }
