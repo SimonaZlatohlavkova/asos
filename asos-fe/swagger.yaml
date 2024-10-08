@@ -12,16 +12,16 @@ paths:
       requestBody:
         content:
           application/json:
-              example:
-                password: "password"
-                email: "johndoe@example.com"
+            example:
+              password: "password"
+              email: "johndoe@example.com"
       responses:
         '200':
           description: Authorization token
           content:
             application/json:
-             example:
-               jwt: "jwtTOKEN"
+              example:
+                jwt: "jwtTOKEN"
         '400':
           description: "Wrong login or password"
   /user/signup:
@@ -72,23 +72,23 @@ paths:
                       format: float
                       example: 3.5
                     address:
-                        type: object
-                        properties:
-                          street:
-                            type: string
-                            example: "Dlhá ulica"
-                          houseNumber:
-                            type: string
-                            example: "38/28P"
-                          postCode:
-                            type: string
-                            example: "91943"
-                          city:
-                            type: string
-                            example: "Humenné"
-                          country:
-                            type: string
-                            example: "Slovakia"
+                      type: object
+                      properties:
+                        street:
+                          type: string
+                          example: "Dlhá ulica"
+                        houseNumber:
+                          type: string
+                          example: "38/28P"
+                        postCode:
+                          type: string
+                          example: "91943"
+                        city:
+                          type: string
+                          example: "Humenné"
+                        country:
+                          type: string
+                          example: "Slovakia"
                     status:
                       type: string
                       enum:
@@ -153,41 +153,39 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  address:
+              type: object
+              properties:
+                address:
+                  type: object
+                  properties:
+                    street:
+                      type: string
+                      example: "Dlhá ulica"
+                    houseNumber:
+                      type: string
+                      example: "38/28P"
+                    postCode:
+                      type: string
+                      example: "91943"
+                    country:
+                      type: string
+                      example: "Slovakia"
+                products:
+                  type: array
+                  items:
                     type: object
                     properties:
-                      street:
-                        type: string
-                        example: "Dlhá ulica"
-                      houseNumber:
-                        type: string
-                        example: "38/28P"
-                      postCode:
-                        type: string
-                        example: "91943"
-                      country:
-                        type: string
-                        example: "Slovakia"
-                  products:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
-                        price:
-                          type: number
-                          format: float
-                          example: 1.4
-                        quantity:
-                          type: number
-                          format: integer
-                          example: 2
+                      id:
+                        type: integer
+                        example: 1
+                      price:
+                        type: number
+                        format: float
+                        example: 1.4
+                      quantity:
+                        type: number
+                        format: integer
+                        example: 2
 
 
       responses:
@@ -248,6 +246,59 @@ paths:
         '400':
           description: "Wrong request"
 
+  /product/cart:
+    post:
+      summary: Products info in cart
+      description: Get information about products in cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productIds:
+                  type: array
+                  items:
+                    type: integer
+                    example: 1
+      responses:
+        '200':
+          description: "filtered products"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Yogurt"
+                    url:
+                      type: string
+                      format: url
+                      example: "https://obrazok.sk"
+                    description:
+                      type: string
+                      example: "88% milk, 2% strawberry, 10% chocolate"
+                    originalPrice:
+                      type: number
+                      format: float
+                      example: 1.20
+                    salePrice:
+                      type: number
+                      format: float
+                      nullable: true
+                      example: 0.89
+                    stock:
+                      type: number
+                      nullable: true
+                      example: 8
+        '400':
+          description: "Wrong request"
 
 components:
   securitySchemes:
