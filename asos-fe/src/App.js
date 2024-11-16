@@ -10,6 +10,9 @@ import {green} from "@mui/material/colors";
 import {CartPage} from "./cart/cart";
 import {ProductsPage} from "./products/poduts-page";
 import {Profile} from "./profile/profile";
+import {Provider} from "react-redux";
+import {configureStore} from "@reduxjs/toolkit";
+import {cartSlice} from "./cart/CartRedux";
 
 
 
@@ -69,10 +72,14 @@ export function removeCookie(name) {
 }
 
 
+export const store = configureStore({ reducer: { cart: cartSlice.reducer } });
+
+
 function App() {
 
     return (
         <div className="App">
+            <Provider store={store}>
             <ThemeProvider theme={theme}>
                 <ToastContainer/>
                     <Router>
@@ -87,6 +94,7 @@ function App() {
                         </Routes>
                     </Router>
             </ThemeProvider>
+            </Provider>
         </div>
     );
 }

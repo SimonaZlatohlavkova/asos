@@ -13,7 +13,7 @@ const validationSchema = Yup.object({
 });
 
 
-const dummyProducts = [{
+export const dummyProducts = [{
     id: 1,
     name: "Yogurt",
     url: "https://res.cloudinary.com/riqra/image/upload/w_656,h_656,c_limit,q_auto,f_auto/v1695769979/sellers/9/rlzngadefxo9zlc0zigq.webp",

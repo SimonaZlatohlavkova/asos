@@ -19,12 +19,18 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from "@mui/icons-material/Info";
 import Stack from '@mui/material/Stack';
+import {addToCart} from "../cart/CartRedux";
+import {useDispatch, useSelector} from "react-redux";
 
 export const ProductCard = (props) => {
     const navigate = useNavigate();
-    const [number, setNumber] = useState(0)
-    const handleClick = () => {
-        navigate("/product/detail/" + props.product.id);
+    const [number, setNumber] = useState(props.product.stock >0 ?1 :0)
+    const dispatch = useDispatch();
+    const cart = useSelector((state) => state.cart);
+    const handleClick = (id, numberOfItems) => {
+        if (numberOfItems > 0) {
+            dispatch(addToCart({id: id, numberOfItems: numberOfItems}))
+        }
     }
 
     return (
@@ -64,10 +70,10 @@ export const ProductCard = (props) => {
                         <Typography variant="body2" color="text.secondary" gutterBottom>
                             {props.product.description}
                         </Typography>
-                        {props.product.stock >0 ?<Typography variant="body2" color="text.secondary" >
+                        {props.product.stock > 0 ? <Typography variant="body2" color="text.secondary">
                             Available {props.product.stock} pc
-                        </Typography> : <Typography variant="body2" color="#ff1313" >
-                           Out of stock
+                        </Typography> : <Typography variant="body2" color="#ff1313">
+                            Out of stock
                         </Typography>}
                     </Box>
 
@@ -95,7 +101,9 @@ export const ProductCard = (props) => {
                             </Stack>
                             <Button
                                 variant="contained"
-                                onClick={handleClick}
+                                onClick={() => {
+                                    handleClick(props.product.id, number)
+                                }}
                             >
                                 <AddShoppingCartOutlinedIcon></AddShoppingCartOutlinedIcon>
                             </Button>
