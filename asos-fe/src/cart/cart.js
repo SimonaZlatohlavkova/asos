@@ -25,6 +25,7 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import * as Yup from 'yup';
 import {type} from "@testing-library/user-event/dist/type";
 import {string} from "yup";
+import {fetchWithRateLimit} from "../fetch-with-rate-limits";
 
 const validationSchema = Yup.object({
     street: Yup.string().required('Street Address is required'),
@@ -46,6 +47,11 @@ const dummyDelivery = [
         "id": 2,
         "name": "Kuriér SPS",
         "price": 3.80
+    },
+    {
+        "id": 3,
+        "name": "Kuriér DHL",
+        "price": 4.90
     }
 ]
 
@@ -55,9 +61,9 @@ export const CartPage = () => {
     const cart = useSelector((state) => state.cart);
     const [loadedPage, setLoaded] = useState(false);
     const [adress, setAdress] = useState({})
-    const [selectedDelivery, setSelectedDelivery] = useState()
+    const [selectedDelivery, setSelectedDelivery] = useState(null)
     const [deliveryTypes, setDeliveryTypes] = useState(dummyDelivery)
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState(null);
     useEffect(() => {
         dispatch(updateCartItems(dummyProducts));
         setLoaded(true);
@@ -74,11 +80,11 @@ export const CartPage = () => {
 
     const handleCheckboxChange = (event, id) => {
         if (event.target.checked) {
-            setSelected(id); // Set the newly selected ID
-            setSelectedDelivery(id); // Update the parent component with the selected ID
+            setSelected(id);
+            setSelectedDelivery(id);
         } else {
-            setSelected(null); // Uncheck if the box is unchecked
-            setSelectedDelivery(null); // Remove the selection in the parent component
+            setSelected(null);
+            setSelectedDelivery(null);
         }
     };
 
@@ -93,11 +99,39 @@ export const CartPage = () => {
         return total.toFixed(2);
     };
 
+    const handleConfirmOrder=()=>{
+        const cartBody=cart.map((item)=>{
+            const itemBody={
+                id: item.id,
+                price: item.salePrice? item.salePrice : item.originalPrice,
+                quantity: item.numberOfItems
+            }
+            return itemBody
+        })
+        const body={
+            deliveryId: selectedDelivery,
+            address:{
+                street: adress.street,
+                houseNumber: adress.houseNumber,
+                postCode: adress.postCode,
+                country: adress.country
+            },
+            products:cartBody
+        }
+        console.log("CONFIR ORDER BE")
+        console.log(body)
+       // const response=fetchWithRateLimit()
+        setActiveStep((prevStep) => prevStep + 1);
+    }
+
     const handleNext = () => {
         setActiveStep((prevStep) => prevStep + 1);
     };
 
     const handleBack = () => {
+        console.log(selectedDelivery)
+        console.log(selected)
+        console.log(deliveryTypes)
         setActiveStep((prevStep) => prevStep - 1);
     };
 
@@ -426,7 +460,10 @@ export const CartPage = () => {
 
                                 {/* Total */}
                                 <Typography variant="h6" gutterBottom>
-                                    Total: {calculateTotal()} €
+                                    Total Products: {calculateTotal() } €
+                                </Typography>
+                                <Typography variant="h6" >
+                                    Delivery: {deliveryTypes.filter(item=> item.id === selectedDelivery)[0].price} €
                                 </Typography>
 
                                 {/* Address Summary */}
@@ -472,12 +509,7 @@ export const CartPage = () => {
                                             fullWidth={true}
                                             color="secondary"
                                             onClick={() => {
-                                                console.log('Order Confirmed:', {
-                                                    cart,
-                                                    total: calculateTotal(),
-                                                    address: adress
-                                                });
-                                                setActiveStep((prevStep) => prevStep + 1);
+                                               handleConfirmOrder()
                                             }}
                                         >
                                             Confirm Order
@@ -502,21 +534,19 @@ export const CartPage = () => {
                                                     padding: "3px",
                                                     display: "flex",
                                                     flexDirection: "row",
-                                                    alignItems: "flex-start",
-                                                    justifyContent: "flex-start",
                                                     borderRadius: "8px",
-                                                    textAlign: "center",
                                                     height: "100%",
                                                 }}
 
                                             >
-                                                <Grid container spacing={2}>
+                                                <Grid container spacing={2} sx={{alignItems: {xs:"center", lg:"flex-start"}}}>
 
-                                                    <Grid item xs={1}>
+                                                    <Grid item xs={1} lg={1} sx={{marginLeft:'0.5rem'}}>
 
                                                         <FormControlLabel
                                                             control={
                                                                 <Checkbox
+                                                                    key={item.id}
                                                                     checked={selected === item.id}
                                                                     onChange={(e) => handleCheckboxChange(e, item.id)}
                                                                     name={item.name}
@@ -527,12 +557,17 @@ export const CartPage = () => {
                                                         <Typography variant="body1" gutterBottom>
                                                             {item.name}
                                                         </Typography></Grid>
-                                                    <Grid item xs={4} lg={2} sx={{marginTop:'10px'}}>
+                                                    <Grid item xs={3} lg={5} sx={{marginTop:'10px'}}>
                                                         <Typography variant="body1" color="textSecondary" gutterBottom>
                                                             {item.price} €
                                                         </Typography>
                                                     </Grid>
-                                                    <Grid item xs={0}  lg={7} sx={{marginTop:'10px'}}></Grid>
+                                                    <Grid item xs={12} lg={2} sx={{marginTop:'10px'}}>
+                                                        <Typography variant="body1" color="primary" >
+                                                           Delivery tomorrow
+                                                        </Typography>
+                                                    </Grid>
+
                                                 </Grid>
 
                                                     {/* Checkbox to select the delivery option */}
@@ -570,14 +605,10 @@ export const CartPage = () => {
                                             disabled={selectedDelivery === null}
                                             color="secondary"
                                             onClick={() => {
-                                                console.log('Order Confirmed:', {
-                                                    cart,
-                                                    total: calculateTotal(),
-                                                    address: adress
-                                                });
                                                 setActiveStep((prevStep) => prevStep + 1);
                                             }}
                                         >
+
                                             Order summary
                                             <ChevronRightRoundedIcon></ChevronRightRoundedIcon>
                                         </Button>
