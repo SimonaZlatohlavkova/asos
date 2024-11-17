@@ -44,7 +44,13 @@ export const fetchWithRateLimit = async (body, lastRequestTime, setLastRequestTi
                    resolve(response)
                 }
             } catch (error) {
-                reject(error);
+                if (error instanceof Error) {
+                    toast.error(error.message);
+                } else {
+                    const errorMessage = await error.text();
+                    const errorObject = JSON.parse(errorMessage);
+                    toast.error(errorObject.error);
+                }
             }
         };
 

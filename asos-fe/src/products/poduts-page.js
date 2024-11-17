@@ -86,19 +86,10 @@ export const ProductsPage = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             console.log("Form Submitted with values:", values);
-            try {
+
                 const response = await fetchWithRateLimit(values,lastRequestTime, setLastRequestTime, setRequestCount, requestCount,"product/filter", navigate)
-               console.log("response from BE")
+                console.log("response from BE")
                 console.log(response)
-            } catch (error) {
-                if (error instanceof Error) {
-                    toast.error(error.message); // Display the error message in a toast
-                } else {
-                    const errorMessage = await error.text();
-                    const errorObject = JSON.parse(errorMessage);
-                    toast.error(errorObject.error); // Display the custom backend exception message in a toast
-                }
-            }
 
         }
     });
