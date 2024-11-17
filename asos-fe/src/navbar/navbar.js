@@ -1,31 +1,21 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     AppBar,
     Button,
-    IconButton,
     Toolbar,
-    Typography,
-    Drawer,
-    List,
-    ListItem,
-    ListItemText,
     Link,
-    Box, Container
+    Box,
+    Badge,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import {Link as RouterLink, useNavigate} from 'react-router-dom';
-import * as PropTypes from "prop-types";
-import {getCookie, removeCookie} from "../App";
-import logo from '../llgo.png';
+import { Link as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux'; // To access Redux state
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import logoQ from "../sss.png";
 
-Button.propTypes = {children: PropTypes.node};
-
 const Navbar = () => {
-    const navigate = useNavigate();
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const cart = useSelector((state) => state.cart); // Access cart items from Redux
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -34,85 +24,42 @@ const Navbar = () => {
         setDrawerOpen(open);
     };
 
-
-
-
-    const drawerContent = (
-        <Box
-            sx={{width: 250, mt: 8}} // Drawer starts below the AppBar
-            role="presentation"
-            onClick={toggleDrawer(false)}
-            onKeyDown={toggleDrawer(false)}
-        >
-            <List>
-                <ListItem button component={RouterLink} to="/link1">
-                    <ListItemText primary="Link 1"/>
-                </ListItem>
-                <ListItem button component={RouterLink} to="/link2">
-                    <ListItemText primary="Link 2"/>
-                </ListItem>
-                <ListItem button component={RouterLink} to="/link3">
-                    <ListItemText primary="Link 3"/>
-                </ListItem>
-            </List>
-        </Box>
-    );
+    const cartItemCount = cart.reduce((total, item) => total + item.numberOfItems, 0); // Calculate total items in cart
 
     return (
-    <>
-        <AppBar position="fixed" style={{background: '#1b4903', color: '#ffffff'}}>
-            <Box sx={{paddingLeft:'10vw', paddingRight:'10vw'}}>
-                <Toolbar>
-                    {/* Hamburger Menu Icon on the left */}
-                    {/*  <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography></Typography> */}
+        <>
+            <AppBar position="fixed" style={{ background: '#1b4903', color: '#ffffff' }}>
+                <Box sx={{ paddingLeft: '10vw', paddingRight: '10vw' }}>
+                    <Toolbar>
+                        {/* Logo */}
+                        <Link component={RouterLink} to="/products/search" color="inherit" underline="none" sx={{ p: 1 }}>
+                            <img src={logoQ} alt="Logo" style={{ height: 60 }} />
+                        </Link>
 
-                    {getCookie('auth') && (
-                        <>
-                            <Link component={RouterLink} to="/registration" color="inherit" underline="none"
-                                  sx={{p: 1}}>
-                                Registration
-                            </Link>
-                            <Link component={RouterLink} to="/signin" color="inherit" underline="none" sx={{p: 1}}>
-                                Sign In
-                            </Link>
+                        <Box flexGrow={1} />
 
-                        </>
-                    )}
-                    {!getCookie('auth') && (<>
-                            <Link component={RouterLink}  to="/products/search" color="inherit" underline="none"
-                                  sx={{p: 1}}>
-                                <img src={logoQ} alt="Logo" style={{height: 60}}/>
+                        <Link component={RouterLink} to="/profile" color="inherit" underline="none" sx={{ p: 1 }}>
+                            <AccountCircleOutlinedIcon />
+                        </Link>
 
-                            </Link>
-                            <Box flexGrow={1} />
-                            <Link component={RouterLink}  to="/profile" color="inherit" underline="none"
-                                  sx={{p: 1}}>
-                                <AccountCircleOutlinedIcon></AccountCircleOutlinedIcon>
-                            </Link>
-                            <Link component={RouterLink}  to="/cart" color="inherit" underline="none"
-                                  sx={{p: 1}}>
-                                <ShoppingCartOutlinedIcon></ShoppingCartOutlinedIcon>
-                            </Link>
-                        </>
-
-                    )}
-                </Toolbar>
-            </Box>
-        </AppBar>
-
-        <Drawer
-            anchor="left"
-            open={drawerOpen}
-            onClose={toggleDrawer(false)}
-        >
-            {drawerContent}
-        </Drawer>
-    </>
-)
-    ;
+                        <Link component={RouterLink} to="/cart" color="inherit" underline="none" sx={{ p: 1 }}>
+                            <Badge
+                                badgeContent={cartItemCount} // Show cart item count
+                                color="error" // Red badge
+                                overlap="circular"
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                            >
+                                <ShoppingCartOutlinedIcon />
+                            </Badge>
+                        </Link>
+                    </Toolbar>
+                </Box>
+            </AppBar>
+        </>
+    );
 };
 
 export default Navbar;

@@ -110,7 +110,25 @@ export const CartPage = () => {
                                 <>
                                     <div style={{maxHeight: '50vh', overflowY: 'auto', paddingRight: '10px'}}>
                                         {cart.length === 0 ? (
-                                            <Typography variant="h6">Your cart is empty.</Typography>
+                                            <Box
+                                                display="flex"
+                                                justifyContent="center"
+                                                alignItems="center"
+                                                sx={{
+                                                    height: '100%', // Adjust height to fully center content in the card
+                                                    textAlign: 'center',
+                                                }}
+                                            >
+                                                <Typography
+                                                    variant="h4" // Larger font size
+                                                    color="gray" // Secondary color
+                                                    sx={{
+                                                        padding: '20px', // Adds padding for a cleaner look
+                                                    }}
+                                                >
+                                                    Your cart is empty
+                                                </Typography>
+                                            </Box>
                                         ) : (
                                             cart.map(item => (
                                                 <Grid container spacing={2} key={item.id} alignItems="center"
