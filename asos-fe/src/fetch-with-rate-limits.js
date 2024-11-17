@@ -9,22 +9,25 @@ export const fetchWithRateLimit = async (body, lastRequestTime, setLastRequestTi
 
     return new Promise((resolve, reject) => {
         const makeRequest = async () => {
+
             console.log(body, url)
             const currentTime = new Date().getTime();
-            if (currentTime - lastRequestTime < requestInterval) {
-                setRequestCount(requestCount + 1);
-                setLastRequestTime(currentTime)
-                if (requestCount > maxRequests) {
-                    reject(new Error('Too many requests, please try again later.'));
-                    return;
-                }
-            } else {
-                setRequestCount(1)
-                setLastRequestTime(currentTime)
-            }
+            console.log(currentTime)
+            console.log(requestInterval)
             try {
+                if (currentTime - lastRequestTime < requestInterval) {
+                    setRequestCount(requestCount + 1);
+                    setLastRequestTime(currentTime)
+                    if (requestCount > maxRequests) {
+                        throw new Error('Too many requests, please try again later.');
+                    }
+                } else {
+                    setRequestCount(1)
+                    setLastRequestTime(currentTime)
+                }
+
                 const token = getCookie('auth');
-                const response = await fetch("http://localhost:8443/" + url , {
+                const response = await fetch("http://localhost:8443/" + url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -41,7 +44,7 @@ export const fetchWithRateLimit = async (body, lastRequestTime, setLastRequestTi
                         toast.error(jsonData.message)
                     }
                 } else {
-                   resolve(response)
+                    resolve(response)
                 }
             } catch (error) {
                 if (error instanceof Error) {

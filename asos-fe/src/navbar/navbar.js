@@ -42,6 +42,7 @@ const Navbar = () => {
                             <AccountCircleOutlinedIcon />
                         </Link>
 
+
                         <Link component={RouterLink} to="/cart" color="inherit" underline="none" sx={{ p: 1 }}>
                             <Badge
                                 badgeContent={cartItemCount} // Show cart item count

@@ -40,6 +40,13 @@ export const Profile = () => {
                             <Button
                                 variant="contained"
 
+                                onClick={()=>{navigate("/orders")}}
+                            >
+                               Show orders history
+                            </Button>
+                            <Button
+                                variant="contained"
+
                                 onClick={handleSignOut}
                             >
                                 Sign Out
