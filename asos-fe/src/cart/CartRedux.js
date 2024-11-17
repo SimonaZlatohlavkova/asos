@@ -37,6 +37,7 @@ export const cartSlice = createSlice({
                         originalPrice: update.originalPrice || existingItem.originalPrice,
                         salePrice: update.salePrice || existingItem.salePrice,
                         stock: update.stock || existingItem.stock,
+                        url: update.url || existingItem.url
                     });
                 }
             });

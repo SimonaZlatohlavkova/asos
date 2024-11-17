@@ -7,6 +7,7 @@ import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {Container, createTheme, ThemeProvider} from "@mui/material";
 import {green} from "@mui/material/colors";
+import {grey} from "@mui/material/colors";
 import {CartPage} from "./cart/cart";
 import {ProductsPage} from "./products/poduts-page";
 import {Profile} from "./profile/profile";
@@ -23,6 +24,9 @@ const theme = createTheme({
         },
         secondary: {
             main: green[900],
+        },
+        grey: {
+            main: grey[500],
         },
     },
     components: {

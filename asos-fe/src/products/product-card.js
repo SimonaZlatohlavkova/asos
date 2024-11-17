@@ -101,6 +101,7 @@ export const ProductCard = (props) => {
                             </Stack>
                             <Button
                                 variant="contained"
+                                disabled={number<=0}
                                 onClick={() => {
                                     handleClick(props.product.id, number)
                                 }}
