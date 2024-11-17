@@ -143,6 +143,37 @@ paths:
         '400':
           description: "Wrong request"
 
+
+  /delivery:
+    get:
+      summary: delivery info
+      security:
+        - bearerAuth: [ ]
+      description: Get delivery
+      responses:
+        '200':
+          description: "filtered products"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    name:
+                      type: string
+                      example: "Kuriér DPD"
+                    price:
+                      type: number
+                      format: float
+                      example: 1.20
+
+        '400':
+          description: "Wrong request"
+
   /order:
     post:
       summary: Order from user
@@ -155,6 +186,9 @@ paths:
             schema:
               type: object
               properties:
+                deliveryId:
+                  type: string
+                  example: "1"
                 address:
                   type: object
                   properties:
