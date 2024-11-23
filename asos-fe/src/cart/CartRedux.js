@@ -25,7 +25,10 @@ export const cartSlice = createSlice({
             }
         },
         loadCart: (state, action) => {
-            return action.payload; // Replace the entire cart state with the fetched data
+            return action.payload;
+        },
+        emptyCart: (state, action) => {
+            return [];
         },
         updateCartItems: (state, action) => {
             const updates = action.payload; // Array of updated items
@@ -45,7 +48,7 @@ export const cartSlice = createSlice({
 
     },
 });
-export const { addToCart, removeFromCart, decrementItemQuantity, updateCartItems,loadCart } = cartSlice.actions;
+export const { addToCart, emptyCart, removeFromCart, decrementItemQuantity, updateCartItems,loadCart } = cartSlice.actions;
  export const Cart = () => {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.cart);

@@ -15,7 +15,7 @@ import {
 import {Delete, RadioButtonChecked} from '@mui/icons-material';
 import {useDispatch, useSelector} from "react-redux";
 import {dummyProducts} from "../products/poduts-page";
-import {addToCart, decrementItemQuantity, removeFromCart, updateCartItems} from "./CartRedux";
+import {addToCart, decrementItemQuantity, emptyCart, removeFromCart, updateCartItems} from "./CartRedux";
 import Stack from "@mui/material/Stack";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -26,6 +26,8 @@ import * as Yup from 'yup';
 import {type} from "@testing-library/user-event/dist/type";
 import {string} from "yup";
 import {fetchWithRateLimit} from "../fetch-with-rate-limits";
+import {setCookie} from "../App";
+import {useNavigate} from "react-router-dom";
 
 const validationSchema = Yup.object({
     street: Yup.string().required('Street Address is required'),
@@ -64,6 +66,11 @@ export const CartPage = () => {
     const [selectedDelivery, setSelectedDelivery] = useState(null)
     const [deliveryTypes, setDeliveryTypes] = useState(dummyDelivery)
     const [selected, setSelected] = useState(null);
+
+    const [requestCount, setRequestCount] = useState(0)
+    const [lastRequestTime, setLastRequestTime] = useState(0)
+    const navigate = useNavigate()
+
     useEffect(() => {
         dispatch(updateCartItems(dummyProducts));
         setLoaded(true);
@@ -120,8 +127,18 @@ export const CartPage = () => {
         }
         console.log("CONFIR ORDER BE")
         console.log(body)
-       // const response=fetchWithRateLimit()
-        setActiveStep((prevStep) => prevStep + 1);
+
+
+        postOrderToBE(body).then(()=>{
+            setActiveStep((prevStep) => prevStep + 1)
+            dispatch(emptyCart())
+        })
+    }
+
+    const postOrderToBE=async (values) => {
+        const response = await fetchWithRateLimit(values, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "order", navigate)
+        console.log("response from BE")
+        console.log(response)
     }
 
     const handleNext = () => {

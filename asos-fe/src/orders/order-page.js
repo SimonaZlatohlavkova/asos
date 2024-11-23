@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {Orders} from "./orders";
+import {updateCartItems} from "../cart/CartRedux";
+import {dummyProducts} from "../products/poduts-page";
+import {fetchWithRateLimitsGET} from "../fetch-with-rate-limits-get";
+import {useNavigate} from "react-router-dom";
+import {fetchWithRateLimit} from "../fetch-with-rate-limits";
 
 
-const dummyorders=[
+const dummyorders = [
     {
         "id": 1,
         "date": "2024-11-01",
@@ -101,10 +106,27 @@ const dummyorders=[
 
 export const OrderPage = () => {
     const [orders, setOrders] = useState(dummyorders);
+    const [requestCount, setRequestCount] = useState(0)
+    const [lastRequestTime, setLastRequestTime] = useState(0)
+    const navigate = useNavigate()
 
 
 
-    return <Orders orders={orders} />;
+    useEffect(() => {
+        fetchData()
+    }, []);
+
+    const fetchData=async () => {
+        const response = await fetchWithRateLimitsGET(lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "user/orders", navigate)
+        console.log("response from BE")
+        console.log(response)
+        const jsonData = await response.json()
+        if (jsonData) {
+            setOrders(jsonData)
+        }
+    }
+
+    return <Orders orders={orders}/>;
 };
 
 

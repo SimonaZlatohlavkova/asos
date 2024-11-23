@@ -9,6 +9,7 @@ import {ProductCard} from "./product-card";
 import {toast} from "react-toastify";
 import {fetchWithRateLimit} from "../fetch-with-rate-limits";
 import {useNavigate} from "react-router-dom";
+
 const validationSchema = Yup.object({
     name: Yup.string()
         .max(30, 'Name must be at most 30 characters')
@@ -78,6 +79,7 @@ export const ProductsPage = () => {
     const [disabledButton, setDisabledButton] = useState(true);
     const [requestCount, setRequestCount] = useState(0)
     const [lastRequestTime, setLastRequestTime] = useState(0)
+    const [searchedProducts, setSearchedProducts] = useState(dummyProducts)
     const navigate = useNavigate()
     const formik = useFormik({
         initialValues: {
@@ -87,9 +89,13 @@ export const ProductsPage = () => {
         onSubmit: async (values) => {
             console.log("Form Submitted with values:", values);
 
-                const response = await fetchWithRateLimit(values,lastRequestTime, setLastRequestTime, setRequestCount, requestCount,"product/filter", navigate)
-                console.log("response from BE")
-                console.log(response)
+            const response = await fetchWithRateLimit(values, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "product/filter", navigate)
+            console.log("response from BE")
+            console.log(response)
+            const jsonData = await response.json()
+            if (jsonData) {
+                setSearchedProducts(jsonData)
+            }
 
         }
     });
@@ -152,7 +158,7 @@ export const ProductsPage = () => {
                 container
                 spacing={2}
             >
-                {dummyProducts.length > 0 && dummyProducts.map((prod) => {
+                {searchedProducts.length > 0 && searchedProducts.map((prod) => {
                     return <Grid item xs={12} md={4} lg={3}>
                         <ProductCard key={prod.id} product={prod}></ProductCard>
                     </Grid>
