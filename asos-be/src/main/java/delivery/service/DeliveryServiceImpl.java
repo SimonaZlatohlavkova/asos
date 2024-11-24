@@ -15,6 +15,7 @@ public class DeliveryServiceImpl implements IDeliveryService {
 
     private final DeliveryRepository deliveryRepository;
 
+    @Override
     public Delivery getDeliveryById(Long id) {
         if (deliveryRepository.findById(id).isEmpty()){
             //TODO custom exception
@@ -23,14 +24,17 @@ public class DeliveryServiceImpl implements IDeliveryService {
         return deliveryRepository.findById(id).get();
     }
 
+    @Override
     public Delivery saveDelivery(Delivery delivery) {
         return deliveryRepository.save(delivery);
     }
 
+    @Override
     public void deleteDelivery(Long id) {
         deliveryRepository.deleteById(id);
     }
 
+    @Override
     public List<DeliveryResponse> getDeliveries() {
         return deliveryRepository.findAll().stream()
                 .map(this::convertDeliveryToDeliveryResponse)
