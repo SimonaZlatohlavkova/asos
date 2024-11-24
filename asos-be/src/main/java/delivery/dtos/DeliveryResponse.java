@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 public class DeliveryResponse {
-    private Long id;
+    private Long deliveryId;
     private String name;
     private BigDecimal price;
 }

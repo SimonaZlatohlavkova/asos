@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class OrderController {
 
-    private IOrderService orderService;
+    private IOrderService iOrderService;
 
     @PostMapping()
     public ResponseEntity<String> createorder(@RequestBody OrderRequest orderRequest) {
-        orderService.createOrder(orderRequest);
+        iOrderService.createOrder(orderRequest);
         return ResponseEntity.ok("Order created");
     }
 }

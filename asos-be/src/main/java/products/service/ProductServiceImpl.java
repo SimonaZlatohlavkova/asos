@@ -6,11 +6,10 @@ import products.models.Product;
 import products.repo.ProductRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class ProductService {
+public class ProductServiceImpl {
 
     private final ProductRepository productRepository;
 

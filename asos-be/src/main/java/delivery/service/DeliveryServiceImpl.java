@@ -44,7 +44,7 @@ public class DeliveryServiceImpl implements IDeliveryService {
     private DeliveryResponse convertDeliveryToDeliveryResponse(Delivery delivery) {
         DeliveryResponse deliveryResponse = new DeliveryResponse();
 
-        deliveryResponse.setId(delivery.getId());
+        deliveryResponse.setDeliveryId(delivery.getDeliveryId());
         deliveryResponse.setName(delivery.getName());
         deliveryResponse.setPrice(delivery.getPrice());
 
