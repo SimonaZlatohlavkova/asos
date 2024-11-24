@@ -1,4 +1,4 @@
-package products.models;
+package address.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,23 +13,27 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "products")
-public class Product {
+@Table(name = "addresses")
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;
+    private Long addressId;
 
     @Column(nullable = false)
-    private String name;
+    private String street;
 
     @Column(nullable = false)
-    private String url;
-
-    private String description;
+    private String city;
 
     @Column(nullable = false)
-    private BigDecimal originalPrice;
+    private String state;
+
+    @Column(nullable = false)
+    private String postalCode;
+
+    @Column(nullable = false)
+    private String country;
 
     private LocalDateTime createdAt;
 }

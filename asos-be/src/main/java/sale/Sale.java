@@ -1,9 +1,10 @@
-package products.models;
+package sale;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import products.models.Product;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,23 +15,21 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "products")
-public class Product {
+@Table(name = "sales")
+public class Sale {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;
+    private Long saleId;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column(nullable = false)
-    private String name;
+    private BigDecimal salePrice;
 
-    @Column(nullable = false)
-    private String url;
-
-    private String description;
-
-    @Column(nullable = false)
-    private BigDecimal originalPrice;
-
+    private LocalDateTime dateFrom;
+    private LocalDateTime dateTo;
     private LocalDateTime createdAt;
 }
