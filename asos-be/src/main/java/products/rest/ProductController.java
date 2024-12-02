@@ -25,11 +25,13 @@ public class ProductController {
 
     @PostMapping("/filter")
     public ResponseEntity<List<ProductResponse>> filterProduct(@RequestBody ProductFilterRequest productFilterRequest) {
-        return null;
+        List<ProductResponse> productResponses = iProductService.filterProducts(productFilterRequest);
+        return ResponseEntity.ok(productResponses);
     }
 
     @PostMapping("/cart")
     public ResponseEntity<List<ProductResponse>> getProductsFromCart(@RequestBody ProductCartRequest productCartRequest) {
-        return null;
+        List<ProductResponse> productResponses = iProductService.getCartProducts(productCartRequest);
+        return ResponseEntity.ok(productResponses);
     }
 }

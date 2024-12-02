@@ -1,6 +1,7 @@
 package order.dtos;
 
 import address.dtos.AddressRequest;
+import address.models.Address;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderRequest {
     private Long deliveryId;
-    private AddressRequest address;
+    private Address address;
     private List<ProductRequest> products;
 }

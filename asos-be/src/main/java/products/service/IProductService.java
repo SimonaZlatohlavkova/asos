@@ -1,5 +1,7 @@
 package products.service;
 
+import products.dtos.ProductCartRequest;
+import products.dtos.ProductFilterRequest;
 import products.dtos.ProductResponse;
 import products.models.Product;
 
@@ -10,4 +12,6 @@ public interface IProductService {
     Product saveProduct(Product product);
     void deleteProduct(Long id);
     List<Product> getAllProducts();
+    List<ProductResponse> filterProducts(ProductFilterRequest request);
+    List<ProductResponse> getCartProducts(ProductCartRequest request);
 }

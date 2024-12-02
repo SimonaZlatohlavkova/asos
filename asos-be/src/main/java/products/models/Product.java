@@ -32,5 +32,7 @@ public class Product {
     @Column(nullable = false)
     private BigDecimal originalPrice;
 
+    private Long stock;
+
     private LocalDateTime createdAt;
 }

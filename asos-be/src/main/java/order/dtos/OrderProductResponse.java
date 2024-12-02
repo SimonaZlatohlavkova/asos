@@ -13,12 +13,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class OrderResponse {
-    private Long orderId;
-    private LocalDateTime date;
-    private BigDecimal summarization;
-    private BigDecimal deliveryCost;
-    private AddressResponse address;
-    private String status;
-    private List<OrderProductResponse> products;
+public class OrderProductResponse {
+    private Long id;
+    private BigDecimal price;
+    private Long quantity;
+    private String name;
+    private String url;
 }
