@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 public class ProductResponse {
-    private Long productId;
+    private Long id;
     private String name;
     private String url;
     private String description;

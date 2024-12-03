@@ -28,7 +28,8 @@ public class UserRest {
             UserDto registeredUser = userService.registerUser(registrationRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
         } catch (RegistrationException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage(), HttpStatus.BAD_REQUEST.value(), e.getClass().getName()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(e.getMessage(),
+                    HttpStatus.BAD_REQUEST.value(), e.getClass().getName()));
         }
     }
 

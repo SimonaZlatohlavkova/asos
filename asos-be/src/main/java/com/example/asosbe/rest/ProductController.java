@@ -30,7 +30,8 @@ public class ProductController {
             userService.getUserIdByToken(jwt);
         }
         catch(LoginException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(), HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(),
+                    HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
         }
         return ResponseEntity.status(HttpStatus.OK).body(productService.getProductById(id));
     }
@@ -43,7 +44,8 @@ public class ProductController {
             userService.getUserIdByToken(jwt);
         }
         catch(LoginException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(), HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(),
+                    HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
         }
         List<ProductResponse> productResponses = productService.filterProducts(productFilterRequest);
         return ResponseEntity.ok(productResponses);
@@ -56,7 +58,8 @@ public class ProductController {
             userService.getUserIdByToken(jwt);
         }
         catch(LoginException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(), HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(),
+                    HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
         }
         List<ProductResponse> productResponses = productService.getCartProducts(productCartRequest);
         return ResponseEntity.ok(productResponses);
