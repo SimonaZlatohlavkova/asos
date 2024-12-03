@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS "products";
 DROP TABLE IF EXISTS "users";
 
 CREATE TABLE "users" (
-  "user_id" integer PRIMARY KEY,
+  "id" integer PRIMARY KEY,
   "name" varchar(50),
   "surname" varchar(100),
   "email" varchar(100) UNIQUE,
@@ -72,7 +72,7 @@ CREATE TABLE "addresses" (
 
 ALTER TABLE "sales" ADD FOREIGN KEY ("product_id") REFERENCES "products" ("id");
 
-ALTER TABLE "orders" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("user_id");
+ALTER TABLE "orders" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 ALTER TABLE "orders" ADD FOREIGN KEY ("address_id") REFERENCES "addresses" ("id");
 
