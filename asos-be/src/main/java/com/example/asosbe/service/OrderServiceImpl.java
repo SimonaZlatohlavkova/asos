@@ -54,8 +54,7 @@ public class OrderServiceImpl implements IOrderService {
         order.setDelivery(deliveryService.getDeliveryById(orderRequest.getDeliveryId()));
 
         BigDecimal totalPrice = orderRequest.getProducts().stream()
-                .map(productRequest -> productService.getProductById(productRequest.getId())
-                        .getOriginalPrice().multiply(BigDecimal.valueOf(productRequest.getQuantity())))
+                .map(productRequest -> productRequest.getPrice().multiply(BigDecimal.valueOf(productRequest.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         order.setTotalPrice(totalPrice);
