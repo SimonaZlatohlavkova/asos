@@ -1,6 +1,8 @@
 package service;
 
 import dto.AddressResponse;
+import exception.NotFoundException;
+import mapper.OrderMapper;
 import repository.AddressRepository;
 import repository.DeliveryRepository;
 import lombok.AllArgsConstructor;
@@ -23,33 +25,36 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements IOrderService {
 
     private final OrderRepository orderRepository;
-    private final ProductRepository productRepository;
-    private final AddressRepository addressRepository;
-    private final DeliveryRepository deliveryRepository;
+    private final IProductService productService;
+    private final IAddressService addressService;
+    private final IDeliveryService deliveryService;
+
+    private final OrderMapper orderMapper;
 
     @Override
     public Order getOrderById(Long id) {
-        if (orderRepository.findById(id).isEmpty()){
-            //TODO custom exception
-            return null;
+        var order= orderRepository.findById(id);
+        if (order.isEmpty()){
+           throw new NotFoundException("Order with id " + id + " not found");
         }
-        return orderRepository.findById(id).get();
+        return order.get();
     }
 
     @Override
-    public Order createOrder(OrderRequest orderRequest) {
-        //TODO handle custom exception
+    public List<OrderResponse> getOrdersByUserId(Long userId) {
+        return orderRepository.findByUser_UserId(userId).stream()
+                .map(orderMapper::toOrderResponse)
+                .toList();
+    }
+
+    @Override
+    public void createOrder(OrderRequest orderRequest) {
         Order order = new Order();
-
-        order.setAddress(addressRepository.findById(orderRequest.getAddress().getAddressId())
-                .orElseThrow(() -> new RuntimeException("Address not found")));
-
-        order.setDelivery(deliveryRepository.findById(orderRequest.getDeliveryId())
-                .orElseThrow(() -> new RuntimeException("Delivery not found")));
+        order.setAddress(addressService.getById(orderRequest.getAddress().getAddressId()));
+        order.setDelivery(deliveryService.getDeliveryById(orderRequest.getDeliveryId()));
 
         BigDecimal totalPrice = orderRequest.getProducts().stream()
-                .map(productRequest -> productRepository.findById(productRequest.getId())
-                        .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productRequest.getId()))
+                .map(productRequest -> productService.getProductById(productRequest.getId())
                         .getOriginalPrice().multiply(BigDecimal.valueOf(productRequest.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -57,7 +62,7 @@ public class OrderServiceImpl implements IOrderService {
         order.setStatus("pending");
         order.setOrderDate(LocalDateTime.now());
 
-        return orderRepository.save(order);
+        orderRepository.save(order);
     }
 
     @Override
@@ -68,40 +73,7 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public List<OrderResponse> getOrders() {
         return orderRepository.findAll().stream()
-                .map(this::convertOrderToOrderResponse)
-                .collect(Collectors.toList());
-    }
-
-    private OrderResponse convertOrderToOrderResponse(Order order) {
-        OrderResponse response = new OrderResponse();
-        response.setOrderId(order.getOrderId());
-        response.setDate(order.getOrderDate());
-        response.setSummarization(order.getTotalPrice());
-        response.setDeliveryCost(order.getDelivery().getPrice());
-        response.setStatus(order.getStatus());
-
-        AddressResponse addressResponse = new AddressResponse();
-        addressResponse.setStreet(order.getAddress().getStreet());
-        addressResponse.setCity(order.getAddress().getCity());
-        addressResponse.setCountry(order.getAddress().getCountry());
-        addressResponse.setPostCode(order.getAddress().getPostalCode());
-//        addressResponse.setHouseNumber();
-        response.setAddress(addressResponse);
-
-        response.setProducts(order.getOrderProducts().stream()
-                .map(orderProduct -> {
-                    Product product = productRepository.findById(orderProduct.getOrderProductId())
-                            .orElseThrow(() -> new RuntimeException("Product not found with ID: " + orderProduct.getOrderProductId()));
-                    OrderProductResponse orderProductResponse = new OrderProductResponse();
-                    orderProductResponse.setId(orderProduct.getOrderProductId());
-                    orderProductResponse.setPrice(orderProduct.getPrice());
-                    orderProductResponse.setQuantity(orderProduct.getQuantity());
-                    orderProductResponse.setName(product.getName());
-                    orderProductResponse.setUrl(product.getUrl());
-
-                    return orderProductResponse;
-                })
-                .collect(Collectors.toList()));
-        return response;
+                .map(orderMapper::toOrderResponse)
+                .toList();
     }
 }

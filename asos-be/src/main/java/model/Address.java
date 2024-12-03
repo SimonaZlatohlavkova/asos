@@ -30,6 +30,9 @@ public class Address {
     private String state;
 
     @Column(nullable = false)
+    private String houseNumber;
+
+    @Column(nullable = false)
     private String postalCode;
 
     @Column(nullable = false)

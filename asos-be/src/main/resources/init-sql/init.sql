@@ -66,6 +66,7 @@ CREATE TABLE "addresses" (
   "state" varchar(100) NOT NULL,
   "postal_code" varchar(20) NOT NULL,
   "country" varchar(100) NOT NULL,
+  "house_number" varchar(100) NOT NULL,
   "created_at" timestamp
 );
 

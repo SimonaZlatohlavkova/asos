@@ -1,5 +1,6 @@
 package service;
 
+import exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import dto.ProductCartRequest;
@@ -25,7 +26,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with ID: " + id));
+                .orElseThrow(() -> new NotFoundException("Product not found with ID: " + id));
     }
 
     @Override
@@ -36,7 +37,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void deleteProduct(Long id) {
         if (!productRepository.existsById(id)) {
-            throw new RuntimeException("Cannot delete, product not found with ID: " + id);
+            throw new NotFoundException("Cannot delete, product not found with ID: " + id);
         }
         productRepository.deleteById(id);
     }

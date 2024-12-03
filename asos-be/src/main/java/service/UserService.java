@@ -1,14 +1,11 @@
 package service;
 
-import dto.UserLoginRequest;
-import dto.UserRegistrationRequest;
-import dto.ValidationDto;
+import dto.*;
 import exception.NotFoundException;
-import dto.UserDto;
 import exception.RegistrationException;
 
-import java.security.PublicKey;
-import java.util.Map;
+import javax.security.auth.login.LoginException;
+import java.util.List;
 
 public interface UserService {
 
@@ -18,10 +15,9 @@ public interface UserService {
 
     ValidationDto isValidToken(String jwt);
 
-    Long getUserIdByToken(String jwt);
+    List<OrderResponse> getUserOrders(Long userId);
 
-    Map<String, String> encrypt(byte[] data, PublicKey publicKey) throws Exception;
+    Long getUserIdByToken(String jwt) throws LoginException;
 
-    PublicKey getPublicKeyFromString(String key) throws Exception;
-
+    UserProfileResponse getUserProfile(Long userId);
 }

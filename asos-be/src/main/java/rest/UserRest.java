@@ -1,9 +1,6 @@
 package rest;
 
-import dto.UserDto;
-import dto.UserLoginRequest;
-import dto.UserRegistrationRequest;
-import dto.ValidationDto;
+import dto.*;
 import exception.ErrorResponse;
 import exception.NotFoundException;
 import exception.RegistrationException;
@@ -12,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.UserService;
+
+import javax.security.auth.login.LoginException;
 
 @RestController
 @RequestMapping("/api")
@@ -43,6 +42,30 @@ public class UserRest {
     @GetMapping("/validation")
     public ResponseEntity<ValidationDto> isValidToken(@RequestHeader("Authorization") String jwt) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.isValidToken(jwt));
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<Object> getUserProfile(@RequestHeader("Authorization") String jwt) {
+        Long userId = null;
+        try{
+            userId = userService.getUserIdByToken(jwt);
+        }
+        catch(LoginException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(), HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserProfile(userId));
+    }
+
+    @GetMapping("/orders")
+    public ResponseEntity<Object> getUserOrders(@RequestHeader("Authorization") String jwt) {
+        Long userId = null;
+        try{
+            userId = userService.getUserIdByToken(jwt);
+        }
+        catch(LoginException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(), HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserOrders(userId));
     }
 }
 

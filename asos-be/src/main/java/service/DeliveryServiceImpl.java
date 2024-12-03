@@ -1,6 +1,7 @@
 package service;
 
 import dto.DeliveryResponse;
+import exception.NotFoundException;
 import model.Delivery;
 import repository.DeliveryRepository;
 import lombok.AllArgsConstructor;
@@ -17,11 +18,11 @@ public class DeliveryServiceImpl implements IDeliveryService {
 
     @Override
     public Delivery getDeliveryById(Long id) {
-        if (deliveryRepository.findById(id).isEmpty()){
-            //TODO custom exception
-            return null;
+        var delivery = deliveryRepository.findById(id);
+        if (delivery.isEmpty()){
+            throw new  NotFoundException("Requested delivery not found");
         }
-        return deliveryRepository.findById(id).get();
+        return delivery.get();
     }
 
     @Override
