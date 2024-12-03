@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {setCookie} from "../App";
 import logo from "../llgo.png";
 import {fetchWithRateLimit} from "../fetch-with-rate-limits";
+import {fetchWithRateLimitsNoToken} from "../fetch-with-rate-limits-no-token";
 
 const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email').required('Email is required').max(100, 'E-mail can have max 100 characters.'),
@@ -26,7 +27,7 @@ export const SignInForm = () => {
             },
             validationSchema: validationSchema,
             onSubmit: async (values) => {
-                const response = await fetchWithRateLimit(values, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "login", navigate)
+                const response = await fetchWithRateLimitsNoToken(values, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "login", navigate)
                 console.log("response from BE")
                 console.log(response)
                 const jsonData = response.json();

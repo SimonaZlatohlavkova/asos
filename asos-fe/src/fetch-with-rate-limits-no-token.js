@@ -3,7 +3,7 @@ import {getCookie} from "./App";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 
-export const fetchWithRateLimit = async (body, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, url, navigate) => {
+export const fetchWithRateLimitsNoToken= async (body, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, url, navigate) => {
     const maxRequests = 3;
     const requestInterval = 5000
 
@@ -26,12 +26,11 @@ export const fetchWithRateLimit = async (body, lastRequestTime, setLastRequestTi
                     setLastRequestTime(currentTime)
                 }
 
-                const token = getCookie('auth');
-                const response = await fetch("http://localhost:8088/" + url, {
+                const response = await fetch("http://localhost:8088/api/" + url, {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `${token}`
                     },
                     body: JSON.stringify(body)
                 });

@@ -15,6 +15,7 @@ import {Provider} from "react-redux";
 import {configureStore} from "@reduxjs/toolkit";
 import {cartSlice} from "./cart/CartRedux";
 import {OrderPage} from "./orders/order-page";
+import {LandingPage} from "./landingPage/LandingPage";
 
 
 
@@ -96,6 +97,7 @@ function App() {
                             <Route exact path="/products/search" element={<ProductsPage></ProductsPage>}/>
                             <Route path="/profile" element={<Profile></Profile>}/>
                             <Route path="/orders" element={<OrderPage></OrderPage>}/>
+                            <Route path="/home" element={<LandingPage></LandingPage>}/>
                             <Route path="/" element={<Navigate to="/home"/>}/>
                         </Routes>
                     </Router>
