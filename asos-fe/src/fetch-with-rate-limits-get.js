@@ -24,7 +24,7 @@ export const fetchWithRateLimitsGET= async (lastRequestTime, setLastRequestTime,
                 }
 
                 const token = getCookie('auth');
-                const response = await fetch("http://localhost:8443/" + url, {
+                const response = await fetch("http://localhost:8088/" + url, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

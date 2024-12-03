@@ -1,5 +1,5 @@
 import {Box, Button, Grid, InputAdornment, TextField} from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useFormik} from "formik";
 import SearchIcon from '@mui/icons-material/Search';
 import * as Yup from "yup";
@@ -9,6 +9,8 @@ import {ProductCard} from "./product-card";
 import {toast} from "react-toastify";
 import {fetchWithRateLimit} from "../fetch-with-rate-limits";
 import {useNavigate} from "react-router-dom";
+import {getCookie} from "../App";
+import {updateCartItems} from "../cart/CartRedux";
 
 const validationSchema = Yup.object({
     name: Yup.string()
@@ -81,6 +83,16 @@ export const ProductsPage = () => {
     const [lastRequestTime, setLastRequestTime] = useState(0)
     const [searchedProducts, setSearchedProducts] = useState(dummyProducts)
     const navigate = useNavigate()
+    const token = getCookie('auth');
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(() => {
+        if (token == null) {
+            navigate("/home")
+        } else {
+            setLoaded(true)
+        }
+    }, []);
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -102,70 +114,71 @@ export const ProductsPage = () => {
 
 
     return (
-
-        <Box sx={{
-            paddingLeft: '10vw',
-            paddingRight: '10vw',
-            marginTop: '100px',
-            marginLeft: '2%',
-            marginRight: '2%',
-            paddingBottom: "1rem"
-        }}>
-            <form onSubmit={formik.handleSubmit}>
-                <Grid
-                    container
-                    spacing={2}
-                >{/*
+        <> {loaded &&
+            <Box sx={{
+                paddingLeft: '10vw',
+                paddingRight: '10vw',
+                marginTop: '100px',
+                marginLeft: '2%',
+                marginRight: '2%',
+                paddingBottom: "1rem"
+            }}>
+                <form onSubmit={formik.handleSubmit}>
+                    <Grid
+                        container
+                        spacing={2}
+                    >{/*
                     <Grid item xs={12} md={2} lg={2}>
                         <img src={logo} alt="Logo" style={{height: "7vh"}}/>
                     </Grid>*/}
-                    <Grid item xs={12} md={12} lg={12}>
-                        <TextField
-                            id="name"
-                            name="name"
-                            fullWidth={true}
-                            value={formik.values.name}
-                            onChange={(e) => {
-                                formik.setFieldValue("name", e.target.value);
-                                setDisabledButton(e.target.value === "");
-                            }}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <SearchIcon/>
-                                    </InputAdornment>
-                                ),
-                                endAdornment: (
-                                    <Button
-                                        type="submit"
-                                        disabled={disabledButton}
-                                        variant="contained"
-                                    >
-                                        Search
-                                    </Button>
-                                ),
-                            }}
-                            placeholder="Search"
-                            error={formik.touched.name && Boolean(formik.errors.name)}
-                            helperText={formik.touched.name && formik.errors.name}
-                            variant="outlined"
-                        />
+                        <Grid item xs={12} md={12} lg={12}>
+                            <TextField
+                                id="name"
+                                name="name"
+                                fullWidth={true}
+                                value={formik.values.name}
+                                onChange={(e) => {
+                                    formik.setFieldValue("name", e.target.value);
+                                    setDisabledButton(e.target.value === "");
+                                }}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <SearchIcon/>
+                                        </InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <Button
+                                            type="submit"
+                                            disabled={disabledButton}
+                                            variant="contained"
+                                        >
+                                            Search
+                                        </Button>
+                                    ),
+                                }}
+                                placeholder="Search"
+                                error={formik.touched.name && Boolean(formik.errors.name)}
+                                helperText={formik.touched.name && formik.errors.name}
+                                variant="outlined"
+                            />
+                        </Grid>
                     </Grid>
+                </form>
+                <Grid
+                    style={{marginTop: '2rem'}}
+                    container
+                    spacing={2}
+                >
+                    {searchedProducts.length > 0 && searchedProducts.map((prod) => {
+                        return <Grid item xs={12} md={4} lg={3}>
+                            <ProductCard key={prod.id} product={prod}></ProductCard>
+                        </Grid>
+                    })}
                 </Grid>
-            </form>
-            <Grid
-                style={{marginTop: '2rem'}}
-                container
-                spacing={2}
-            >
-                {searchedProducts.length > 0 && searchedProducts.map((prod) => {
-                    return <Grid item xs={12} md={4} lg={3}>
-                        <ProductCard key={prod.id} product={prod}></ProductCard>
-                    </Grid>
-                })}
-            </Grid>
 
-        </Box>
+            </Box>
+        }</>
     )
 
 };
