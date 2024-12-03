@@ -71,7 +71,7 @@ public class OrderServiceImpl implements IOrderService {
             orderProduct.setOrder(newOrder);
             orderProduct.setProduct(product);
             orderProduct.setQuantity(productRequest.getQuantity());
-            orderProduct.setPrice(product.getOriginalPrice().multiply(BigDecimal.valueOf(productRequest.getQuantity())));
+            orderProduct.setPrice(productRequest.getPrice());
             orderProductService.save(orderProduct);
         });
         return new OrderResponse(newOrder.getId(), newOrder.getOrderDate(), newOrder.getTotalPrice(),
