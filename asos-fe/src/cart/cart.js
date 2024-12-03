@@ -29,6 +29,7 @@ import {fetchWithRateLimit} from "../fetch-with-rate-limits";
 import {getCookie, setCookie} from "../App";
 import {useNavigate} from "react-router-dom";
 import {fetchWithRateLimitsGET} from "../fetch-with-rate-limits-get";
+import {toast} from "react-toastify";
 
 const validationSchema = Yup.object({
     street: Yup.string().required('Street Address is required'),
@@ -89,10 +90,9 @@ export const CartPage = () => {
             productIds: productIds
         };
         console.log(productIds)
-        fetchData(requestBody)
+        fetchData(requestBody).then(()=>{setLoaded(true);})
         fetchDelivery()
         console.log("LOADED")
-        setLoaded(true);
 
     }, []);
 
@@ -179,6 +179,7 @@ export const CartPage = () => {
         const response = await fetchWithRateLimit(values, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "order", navigate)
         console.log("response from BE")
         console.log(response)
+
     }
 
     const handleNext = () => {
