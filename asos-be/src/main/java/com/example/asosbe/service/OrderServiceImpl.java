@@ -28,16 +28,6 @@ public class OrderServiceImpl implements IOrderService {
     private final OrderMapper orderMapper;
 
     @Override
-    public Order getOrderById(Long id) {
-        log.info("getOrderById({})", id);
-        var order= orderRepository.findById(id);
-        if (order.isEmpty()){
-           throw new NotFoundException("Order with id " + id + " not found");
-        }
-        return order.get();
-    }
-
-    @Override
     public List<OrderResponse> getOrdersByUserId(Long userId) {
         log.info("getOrdersByUserId({})", userId);
         return orderRepository.findByUser_Id(userId).stream()
@@ -62,17 +52,5 @@ public class OrderServiceImpl implements IOrderService {
         order.setOrderDate(LocalDateTime.now());
 
         orderRepository.save(order);
-    }
-
-    @Override
-    public void deleteOrder(Long id) {
-        orderRepository.deleteById(id);
-    }
-
-    @Override
-    public List<OrderResponse> getOrders() {
-        return orderRepository.findAll().stream()
-                .map(orderMapper::toOrderResponse)
-                .toList();
     }
 }

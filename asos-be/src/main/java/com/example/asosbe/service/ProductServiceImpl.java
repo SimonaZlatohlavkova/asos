@@ -78,7 +78,7 @@ public class ProductServiceImpl implements IProductService {
         Optional<Sale> activeSale = saleService.findActiveSaleForProduct(product, LocalDateTime.now());
 
         ProductResponse response = new ProductResponse();
-        response.setProductId(product.getId());
+        response.setId(product.getId());
         response.setName(product.getName());
         response.setUrl(product.getUrl());
         response.setDescription(product.getDescription());
