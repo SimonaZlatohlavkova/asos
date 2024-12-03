@@ -24,7 +24,6 @@ public class OrderServiceImpl implements IOrderService {
     private final IProductService productService;
     private final IAddressService addressService;
     private final IDeliveryService deliveryService;
-    private final IUserService userService;
     private final IOrderProductService orderProductService;
 
     private final OrderMapper orderMapper;
@@ -38,10 +37,9 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public OrderResponse createOrder(OrderRequest orderRequest, Long userId) throws NotFoundException {
+    public OrderResponse createOrder(OrderRequest orderRequest, User user) throws NotFoundException {
         log.info("createOrder()");
         Order order = new Order();
-        User user = userService.getById(userId);
 
         Address address = new Address();
         address.setStreet(orderRequest.getAddress().getStreet());

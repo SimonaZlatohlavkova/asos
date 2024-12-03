@@ -30,7 +30,7 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(),
                     HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
         }
-        var order = iOrderService.createOrder(orderRequest, userId);
+        var order = iOrderService.createOrder(orderRequest, userService.getById(userId));
         return ResponseEntity.ok().body(order);
     }
 }

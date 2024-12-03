@@ -5,15 +5,8 @@ import com.example.asosbe.dto.OrderRequest;
 import com.example.asosbe.dto.OrderResponse;
 import com.example.asosbe.dto.ProductRequest;
 import com.example.asosbe.mapper.OrderMapper;
-import com.example.asosbe.model.Address;
-import com.example.asosbe.model.Delivery;
-import com.example.asosbe.model.Order;
-import com.example.asosbe.model.Product;
+import com.example.asosbe.model.*;
 import com.example.asosbe.repository.OrderRepository;
-import com.example.asosbe.service.IAddressService;
-import com.example.asosbe.service.IDeliveryService;
-import com.example.asosbe.service.IProductService;
-import com.example.asosbe.service.OrderServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -77,6 +70,7 @@ class OrderServiceImplTest {
         Long deliveryId = 1L;
         Long productId = 1L;
         BigDecimal productPrice = BigDecimal.valueOf(100);
+        User testUser = new User(1L, "name", "surname", "email", "pass", LocalDateTime.now());
 
         OrderRequest mockRequest = new OrderRequest();
         mockRequest.setAddress(new AddressRequest("street", "city", "house num",
@@ -97,7 +91,7 @@ class OrderServiceImplTest {
         when(deliveryService.getDeliveryById(deliveryId)).thenReturn(mockDelivery);
         when(productService.getProductById(productId)).thenReturn(mockProduct);
 
-        orderService.createOrder(mockRequest, 1L);
+        orderService.createOrder(mockRequest, testUser);
 
         verify(deliveryService, times(1)).getDeliveryById(deliveryId);
         verify(productService, times(1)).getProductById(productId);
