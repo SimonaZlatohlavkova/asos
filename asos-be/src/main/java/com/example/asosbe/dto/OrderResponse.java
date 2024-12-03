@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class OrderResponse {
-    private Long orderId;
+    private Long id;
     private LocalDateTime date;
     private BigDecimal summarization;
     private BigDecimal deliveryCost;
