@@ -1,5 +1,6 @@
 package com.example.asosbe.service;
 
+import com.example.asosbe.model.Product;
 import lombok.AllArgsConstructor;
 import com.example.asosbe.model.Sale;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class SaleServiceImpl implements ISaleService {
     private final SaleRepository saleRepository;
 
     @Override
-    public Optional<Sale> findActiveSaleForProduct(Long productId, LocalDateTime now) {
-        return saleRepository.findActiveSaleForProduct(productId, now);
+    public Optional<Sale> findActiveSaleForProduct(Product product, LocalDateTime now) {
+        return saleRepository.findActiveSaleForProduct(product, now);
     }
 }

@@ -1,7 +1,10 @@
 package com.example.asosbe.rest;
 
 import com.example.asosbe.dto.ProductResponse;
+import com.example.asosbe.exception.ErrorResponse;
+import com.example.asosbe.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.asosbe.dto.ProductCartRequest;
@@ -9,6 +12,7 @@ import com.example.asosbe.dto.ProductFilterRequest;
 import com.example.asosbe.model.Product;
 import com.example.asosbe.service.IProductService;
 
+import javax.security.auth.login.LoginException;
 import java.util.List;
 
 @RestController
@@ -16,22 +20,45 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductController {
 
-    private final IProductService iProductService;
+    private final IProductService productService;
+
+    private final UserService userService;
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable Long id) {
-        return iProductService.getProductById(id);
+    public ResponseEntity<Object> getProduct(@PathVariable Long id, @RequestHeader("Authorization") String jwt) {
+        try{
+            userService.getUserIdByToken(jwt);
+        }
+        catch(LoginException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(), HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getProductById(id));
     }
 
     @PostMapping("/filter")
-    public ResponseEntity<List<ProductResponse>> filterProduct(@RequestBody ProductFilterRequest productFilterRequest) {
-        List<ProductResponse> productResponses = iProductService.filterProducts(productFilterRequest);
+
+    public ResponseEntity<Object> filterProduct(@RequestBody ProductFilterRequest productFilterRequest,
+                                                               @RequestHeader("Authorization") String jwt) {
+        try{
+            userService.getUserIdByToken(jwt);
+        }
+        catch(LoginException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(), HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
+        }
+        List<ProductResponse> productResponses = productService.filterProducts(productFilterRequest);
         return ResponseEntity.ok(productResponses);
     }
 
     @PostMapping("/cart")
-    public ResponseEntity<List<ProductResponse>> getProductsFromCart(@RequestBody ProductCartRequest productCartRequest) {
-        List<ProductResponse> productResponses = iProductService.getCartProducts(productCartRequest);
+    public ResponseEntity<Object> getProductsFromCart(@RequestBody ProductCartRequest productCartRequest,
+                                                                @RequestHeader("Authorization") String jwt) {
+        try{
+            userService.getUserIdByToken(jwt);
+        }
+        catch(LoginException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(), HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
+        }
+        List<ProductResponse> productResponses = productService.getCartProducts(productCartRequest);
         return ResponseEntity.ok(productResponses);
     }
 }

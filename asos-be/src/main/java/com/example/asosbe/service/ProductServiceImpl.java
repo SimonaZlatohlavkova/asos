@@ -75,7 +75,7 @@ public class ProductServiceImpl implements IProductService {
 
 
     private ProductResponse mapToProductResponse(Product product) {
-        Optional<Sale> activeSale = saleService.findActiveSaleForProduct(product.getId(), LocalDateTime.now());
+        Optional<Sale> activeSale = saleService.findActiveSaleForProduct(product, LocalDateTime.now());
 
         ProductResponse response = new ProductResponse();
         response.setProductId(product.getId());

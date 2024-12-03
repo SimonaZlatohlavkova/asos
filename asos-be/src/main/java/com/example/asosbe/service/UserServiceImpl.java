@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto registerUser(UserRegistrationRequest registrationRequest) throws RegistrationException {
+        log.info("registerUser({})", registrationRequest.getEmail());
         if (registrationRequest.getEmail() == null || registrationRequest.getPassword() == null
                 || registrationRequest.getEmail().isEmpty()){
             throw  new RegistrationException("Email has to be provided");
@@ -68,6 +69,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto loginUser(UserLoginRequest loginRequest) throws NotFoundException {
+        log.info("loginUser({})", loginRequest.getEmail());
         Optional<User> existingUser = this.userRepository.findByEmail(loginRequest.getEmail());
         if(existingUser.isEmpty()) {
             throw new NotFoundException("Email or password is not correct");
@@ -105,10 +107,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<OrderResponse> getUserOrders(Long userId) {
+        log.info("getUserOrders({})", userId);
         return orderService.getOrdersByUserId(userId);
     }
 
     public User getById(Long id) throws NotFoundException{
+        log.info("getById({})", id);
         Optional<User> user = userRepository.findById(id);
         if(user.isEmpty()){
             throw new NotFoundException("User with this id:" + id + " doesn't exist");
@@ -118,6 +122,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long getUserIdByToken(String jwt) throws LoginException{
+        log.info("getUserIdByToken({})", jwt);
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(SECRET_KEY)
@@ -133,6 +138,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserProfileResponse getUserProfile(Long userId) throws NotFoundException{
+        log.info("getUserProfile({})", userId);
         var user = getById(userId);
         return new UserProfileResponse(user.getName(), user.getSurname(), user.getEmail());
     }
@@ -141,6 +147,7 @@ public class UserServiceImpl implements UserService {
         String regex = "^(?=.*[0-9])" + "(?=.*[a-z])(?=.*[A-Z])" + "(?=.*[@#$%^&+=])" + "(?=\\S+$).{8,255}$";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(password);
+        log.info("safePasswordCheck() - check passed: {}", m.matches());
         return m.matches();
     }
 
@@ -148,10 +155,7 @@ public class UserServiceImpl implements UserService {
         String regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(email);
+        log.info("emailCheck() - check passed: {}", m.matches());
         return m.matches();
-    }
-
-    public String generateRandomString() {
-        return RandomStringUtils.randomAlphabetic(16);
     }
 }

@@ -122,7 +122,7 @@ VALUES
 
 INSERT INTO "sales" (id, product_id, sale_price, date_from, date_to, created_at)
 VALUES
-    (1, 1, 0.89, '2024-11-01 00:00:00', '2024-11-30 23:59:59', CURRENT_TIMESTAMP), -- Yogurt
+    (1, 1, 0.89, '2024-11-01 00:00:00', '2024-12-10 23:59:59', CURRENT_TIMESTAMP), -- Yogurt
     (2, 8, 1.20, '2024-11-10 00:00:00', '2024-11-20 23:59:59', CURRENT_TIMESTAMP), -- Pasta
     (3, 13, 0.75, '2024-11-15 00:00:00', '2024-11-25 23:59:59', CURRENT_TIMESTAMP), -- Milk
     (4, 23, 1.10, '2024-12-01 00:00:00', '2024-12-15 23:59:59', CURRENT_TIMESTAMP), -- Crisps
