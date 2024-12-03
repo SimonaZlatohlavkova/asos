@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderRequest {
     private Long deliveryId;
-    private Address address;
+    private AddressRequest address;
     private List<ProductRequest> products;
 }

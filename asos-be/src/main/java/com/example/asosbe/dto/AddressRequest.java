@@ -14,4 +14,5 @@ public class AddressRequest {
     private String houseNumber;
     private String postCode;
     private String country;
+    private String city;
 }

@@ -1,8 +1,10 @@
 package com.example.asosbe.service;
 
+import com.example.asosbe.dto.AddressRequest;
 import com.example.asosbe.dto.OrderRequest;
 import com.example.asosbe.dto.OrderResponse;
 import com.example.asosbe.mapper.OrderMapper;
+import com.example.asosbe.model.Address;
 import com.example.asosbe.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import com.example.asosbe.model.Order;
@@ -38,7 +40,15 @@ public class OrderServiceImpl implements IOrderService {
     public void createOrder(OrderRequest orderRequest) {
         log.info("createOrder()");
         Order order = new Order();
-        order.setAddress(addressService.save(order.getAddress()));
+
+        Address address = new Address();
+        address.setStreet(orderRequest.getAddress().getStreet());
+        address.setCity(orderRequest.getAddress().getCity());
+        address.setHouseNumber(orderRequest.getAddress().getHouseNumber());
+        address.setPostalCode(orderRequest.getAddress().getPostCode());
+        address.setCountry(orderRequest.getAddress().getCountry());
+
+        order.setAddress(addressService.save(address));
         order.setDelivery(deliveryService.getDeliveryById(orderRequest.getDeliveryId()));
 
         BigDecimal totalPrice = orderRequest.getProducts().stream()

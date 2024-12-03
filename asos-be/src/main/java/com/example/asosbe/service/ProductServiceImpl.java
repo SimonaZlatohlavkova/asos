@@ -28,33 +28,9 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
-    }
-
-    @Override
-    public void deleteProduct(Long id) {
-        if (!productRepository.existsById(id)) {
-            throw new NotFoundException("Cannot delete, product not found with ID: " + id);
-        }
-        productRepository.deleteById(id);
-    }
-
-    @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
-
-    @Override
     public List<ProductResponse> filterProducts(ProductFilterRequest request) {
         List<Product> products = productRepository.findByNameContainingIgnoreCase(request.getName());
         return getProductsAsResponses(products);
-    }
-
-    public List<ProductResponse> getProductsAsResponses(List<Product> products) {
-        return products.stream()
-                .map(this::mapToProductResponse)
-                .toList();
     }
 
     @Override
@@ -79,6 +55,12 @@ public class ProductServiceImpl implements IProductService {
         response.setStock(product.getStock());
 
         return response;
+    }
+
+    public List<ProductResponse> getProductsAsResponses(List<Product> products) {
+        return products.stream()
+                .map(this::mapToProductResponse)
+                .toList();
     }
 }
 

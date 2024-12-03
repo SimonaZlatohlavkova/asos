@@ -63,7 +63,6 @@ CREATE TABLE "addresses" (
   "id" SERIAL PRIMARY KEY,
   "street" varchar(255) NOT NULL,
   "city" varchar(100) NOT NULL,
-  "state" varchar(100) NOT NULL,
   "postal_code" varchar(20) NOT NULL,
   "country" varchar(100) NOT NULL,
   "house_number" varchar(100) NOT NULL,

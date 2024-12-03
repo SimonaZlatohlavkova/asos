@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import javax.security.auth.login.LoginException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -31,8 +30,6 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private final IOrderService orderService;
-
-    private final OrderMapper orderMapper;
 
     private static final String SECRET_KEY = "Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=";
 
