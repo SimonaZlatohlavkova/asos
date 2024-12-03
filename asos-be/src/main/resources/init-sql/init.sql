@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS "products";
 DROP TABLE IF EXISTS "users";
 
 CREATE TABLE "users" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar(50),
   "surname" varchar(100),
   "email" varchar(100) UNIQUE,
@@ -16,7 +16,7 @@ CREATE TABLE "users" (
 );
 
 CREATE TABLE "products" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar(100) NOT NULL,
   "url" varchar(524) NOT NULL,
   "description" varchar(1024),
@@ -26,7 +26,7 @@ CREATE TABLE "products" (
 );
 
 CREATE TABLE "sales" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "product_id" integer,
   "sale_price" numeric(10,2) NOT NULL,
   "date_from" timestamp,
@@ -35,14 +35,14 @@ CREATE TABLE "sales" (
 );
 
 CREATE TABLE "deliveries" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar(255) NOT NULL,
   "price" numeric(10,2) NOT NULL,
   "created_at" timestamp
 );
 
 CREATE TABLE "orders" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "user_id" integer,
   "address_id" integer,
   "delivery_id" integer,
@@ -60,7 +60,7 @@ CREATE TABLE "order_products" (
 );
 
 CREATE TABLE "addresses" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "street" varchar(255) NOT NULL,
   "city" varchar(100) NOT NULL,
   "state" varchar(100) NOT NULL,
