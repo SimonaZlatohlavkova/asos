@@ -2,7 +2,6 @@ package com.example.asosbe.service;
 
 import com.example.asosbe.dto.OrderRequest;
 import com.example.asosbe.dto.OrderResponse;
-import com.example.asosbe.exception.NotFoundException;
 import com.example.asosbe.mapper.OrderMapper;
 import com.example.asosbe.repository.OrderRepository;
 import lombok.AllArgsConstructor;
@@ -39,7 +38,7 @@ public class OrderServiceImpl implements IOrderService {
     public void createOrder(OrderRequest orderRequest) {
         log.info("createOrder()");
         Order order = new Order();
-        order.setAddress(addressService.getById(orderRequest.getAddress().getId()));
+        order.setAddress(addressService.save(order.getAddress()));
         order.setDelivery(deliveryService.getDeliveryById(orderRequest.getDeliveryId()));
 
         BigDecimal totalPrice = orderRequest.getProducts().stream()

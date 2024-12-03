@@ -23,5 +23,10 @@ public class AddressServiceImpl implements IAddressService {
         }
         return address.get();
     }
+
+    @Override
+    public Address save(Address address) {
+        return addressRepository.save(address);
+    }
 }
 
