@@ -1,3 +1,11 @@
+DROP TABLE IF EXISTS "order_products";
+DROP TABLE IF EXISTS "orders";
+DROP TABLE IF EXISTS "addresses";
+DROP TABLE IF EXISTS "sales";
+DROP TABLE IF EXISTS "deliveries";
+DROP TABLE IF EXISTS "products";
+DROP TABLE IF EXISTS "users";
+
 CREATE TABLE "users" (
   "user_id" integer PRIMARY KEY,
   "name" varchar(50),
@@ -13,7 +21,8 @@ CREATE TABLE "products" (
   "url" varchar(524) NOT NULL,
   "description" varchar(1024),
   "original_price" numeric(10,2) NOT NULL,
-  "created_at" timestamp
+  "created_at" timestamp,
+  "stock" integer
 );
 
 CREATE TABLE "sales" (
