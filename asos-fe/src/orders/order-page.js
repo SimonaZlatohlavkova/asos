@@ -6,6 +6,8 @@ import {dummyProducts} from "../products/poduts-page";
 import {fetchWithRateLimitsGET} from "../fetch-with-rate-limits-get";
 import {useNavigate} from "react-router-dom";
 import {fetchWithRateLimit} from "../fetch-with-rate-limits";
+import {Box, Typography} from "@mui/material";
+import {getCookie} from "../App";
 
 
 const dummyorders = [
@@ -105,28 +107,53 @@ const dummyorders = [
 
 
 export const OrderPage = () => {
-    const [orders, setOrders] = useState(dummyorders);
+    const [orders, setOrders] = useState([]);
     const [requestCount, setRequestCount] = useState(0)
     const [lastRequestTime, setLastRequestTime] = useState(0)
     const navigate = useNavigate()
 
-
-
+    const token = getCookie('auth');
+    useEffect(() => {
+        if (token == null) {
+            navigate("/home")
+        }
+    }, []);
     useEffect(() => {
         fetchData()
     }, []);
 
-    const fetchData=async () => {
-        const response = await fetchWithRateLimitsGET(lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "user/orders", navigate)
-        console.log("response from BE")
-        console.log(response)
-        const jsonData = await response.json()
+    const fetchData = async () => {
+        const jsonData = await fetchWithRateLimitsGET(lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "api/orders", navigate)
+        console.log(jsonData)
         if (jsonData) {
             setOrders(jsonData)
         }
     }
 
-    return <Orders orders={orders}/>;
+    return (
+
+        <>
+            {orders.length === 0 ?
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                    height: '100%', // Adjust height to fully center content in the card
+                    textAlign: 'center',
+                }}
+            ><Typography
+                variant="h4"
+                color="gray"
+                sx={{
+                    padding: '200px', // Adds padding for a cleaner look
+                }}
+            >
+                You have no orders
+            </Typography> </Box> : <Orders orders={orders}/>}
+        </>
+    )
+
 };
 
 

@@ -28,13 +28,13 @@ export const fetchWithRateLimitsNoToken= async (body, lastRequestTime, setLastRe
 
                 const response = await fetch("http://localhost:8088/api/" + url, {
                     method: 'POST',
-                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(body)
                 });
                 const jsonData = await response.json();
+                console.log(jsonData)
 
                 if (!response.ok) {
                     if (response.status === 401) {
@@ -43,7 +43,7 @@ export const fetchWithRateLimitsNoToken= async (body, lastRequestTime, setLastRe
                         toast.error(jsonData.message)
                     }
                 } else {
-                    resolve(response)
+                    resolve(jsonData)
                 }
             } catch (error) {
                 if (error instanceof Error) {
