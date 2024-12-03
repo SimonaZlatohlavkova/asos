@@ -29,18 +29,6 @@ public class DeliveryServiceImpl implements IDeliveryService {
     }
 
     @Override
-    public Delivery saveDelivery(Delivery delivery) {
-        log.info("saveDelivery({})", delivery.getName());
-        return deliveryRepository.save(delivery);
-    }
-
-    @Override
-    public void deleteDelivery(Long id) {
-        log.info("deleteDelivery({})", id);
-        deliveryRepository.deleteById(id);
-    }
-
-    @Override
     public List<DeliveryResponse> getDeliveries() {
         log.info("getDeliveries()");
         return deliveryRepository.findAll().stream()
@@ -51,7 +39,7 @@ public class DeliveryServiceImpl implements IDeliveryService {
     private DeliveryResponse convertDeliveryToDeliveryResponse(Delivery delivery) {
         DeliveryResponse deliveryResponse = new DeliveryResponse();
 
-        deliveryResponse.setDeliveryId(delivery.getId());
+        deliveryResponse.setId(delivery.getId());
         deliveryResponse.setName(delivery.getName());
         deliveryResponse.setPrice(delivery.getPrice());
 

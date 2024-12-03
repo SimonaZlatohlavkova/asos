@@ -13,7 +13,7 @@ public class OrderMapper {
 
     public OrderResponse toOrderResponse(Order order) {
         OrderResponse response = new OrderResponse();
-        response.setOrderId(order.getId());
+        response.setId(order.getId());
         response.setDate(order.getOrderDate());
         response.setSummarization(order.getTotalPrice());
         response.setDeliveryCost(order.getDelivery().getPrice());

@@ -66,14 +66,6 @@ public class ProductServiceImpl implements IProductService {
         return getProductsAsResponses(products);
     }
 
-    public List<ProductResponse> getAllProductsAsResponses() {
-        return productRepository.findAll().stream()
-                .map(this::mapToProductResponse)
-                .toList();
-    }
-
-
-
     private ProductResponse mapToProductResponse(Product product) {
         Optional<Sale> activeSale = saleService.findActiveSaleForProduct(product, LocalDateTime.now());
 
