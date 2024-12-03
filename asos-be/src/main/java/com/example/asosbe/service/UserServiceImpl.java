@@ -36,9 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto registerUser(UserRegistrationRequest registrationRequest) throws RegistrationException {
-        if (registrationRequest.getEmail() == null || registrationRequest.getPublicKey() == null
-                || registrationRequest.getPassword() == null || registrationRequest.getEmail().isEmpty()){
-            throw  new RegistrationException("Email and public key has to be provided");
+        if (registrationRequest.getEmail() == null || registrationRequest.getPassword() == null
+                || registrationRequest.getEmail().isEmpty()){
+            throw  new RegistrationException("Email has to be provided");
         }
         if(!emailCheck(registrationRequest.getEmail())){
             throw new RegistrationException("Invalid email format");
@@ -52,7 +52,8 @@ public class UserServiceImpl implements UserService {
                 throw new RegistrationException("Password should be at least 8 characters long");
             }
             else if (!safePasswordCheck(registrationRequest.getPassword())){
-                throw new RegistrationException("Password should contain at least: 1 uppercase, 1 lowercase, 1 digit and one of special characters: @#$%^&+=");
+                throw new RegistrationException("Password should contain at least: 1 uppercase, 1 lowercase, 1 digit " +
+                        "and one of special characters: @#$%^&+=");
             }
             User user = new User();
             user.setName(registrationRequest.getName());

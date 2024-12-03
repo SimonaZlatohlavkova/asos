@@ -31,8 +31,5 @@ public class UserRegistrationRequest {
     @Size(min = 8, max = 100, message = "Password should be at least 8 and at most 255 characters")
     private String password;
 
-    @NotBlank(message = "Public key cannot be blank")
-    @Size(max = 2048)
-    private String publicKey;
 }
 
