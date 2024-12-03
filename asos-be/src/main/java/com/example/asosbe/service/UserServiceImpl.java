@@ -8,7 +8,7 @@ import com.example.asosbe.model.User;
 import com.example.asosbe.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.TextCodec;
+import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,6 +34,8 @@ public class UserServiceImpl implements UserService {
 
     private final OrderMapper orderMapper;
 
+    private static final String SECRET_KEY = "Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=";
+
     @Override
     public UserDto registerUser(UserRegistrationRequest registrationRequest) throws RegistrationException {
         if (registrationRequest.getEmail() == null || registrationRequest.getPassword() == null
@@ -52,8 +54,7 @@ public class UserServiceImpl implements UserService {
                 throw new RegistrationException("Password should be at least 8 characters long");
             }
             else if (!safePasswordCheck(registrationRequest.getPassword())){
-                throw new RegistrationException("Password should contain at least: 1 uppercase, 1 lowercase, 1 digit " +
-                        "and one of special characters: @#$%^&+=");
+                throw new RegistrationException("Password should contain at least: 1 uppercase, 1 lowercase, 1 digit and one of special characters: @#$%^&+=");
             }
             User user = new User();
             user.setName(registrationRequest.getName());
@@ -79,8 +80,8 @@ public class UserServiceImpl implements UserService {
             builder.setSubject(existingUser.get().getId().toString());
             builder.setExpiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000));
             builder.signWith(
-                    SignatureAlgorithm.HS256,
-                    TextCodec.BASE64.decode("Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=")
+                    Keys.hmacShaKeyFor(Base64.getDecoder().decode(SECRET_KEY)),
+                    SignatureAlgorithm.HS256
             );
             String jwt = builder
                     .compact();
@@ -92,7 +93,7 @@ public class UserServiceImpl implements UserService {
     public ValidationDto isValidToken(String jwt) {
         try {
             Jwts.parser()
-                    .setSigningKey("Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=")
+                    .setSigningKey(SECRET_KEY)
                     .parseClaimsJws(jwt)
                     .getBody();
             return new ValidationDto(true);
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserService {
     public Long getUserIdByToken(String jwt) throws LoginException{
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey("Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=")
+                    .setSigningKey(SECRET_KEY)
                     .parseClaimsJws(jwt)
                     .getBody();
             return Long.parseLong(claims.getSubject());
