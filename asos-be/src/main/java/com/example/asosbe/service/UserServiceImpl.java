@@ -3,7 +3,6 @@ package com.example.asosbe.service;
 import com.example.asosbe.dto.*;
 import com.example.asosbe.exception.NotFoundException;
 import com.example.asosbe.exception.RegistrationException;
-import com.example.asosbe.mapper.OrderMapper;
 import com.example.asosbe.model.User;
 import com.example.asosbe.repository.UserRepository;
 import io.jsonwebtoken.Claims;
@@ -23,7 +22,7 @@ import java.util.regex.Pattern;
 @Service
 @Slf4j
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
 
@@ -108,6 +107,7 @@ public class UserServiceImpl implements UserService {
         return orderService.getOrdersByUserId(userId);
     }
 
+    @Override
     public User getById(Long id) throws NotFoundException{
         log.info("getById({})", id);
         Optional<User> user = userRepository.findById(id);

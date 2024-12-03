@@ -97,7 +97,7 @@ class OrderServiceImplTest {
         when(deliveryService.getDeliveryById(deliveryId)).thenReturn(mockDelivery);
         when(productService.getProductById(productId)).thenReturn(mockProduct);
 
-        orderService.createOrder(mockRequest);
+        orderService.createOrder(mockRequest, 1L);
 
         verify(deliveryService, times(1)).getDeliveryById(deliveryId);
         verify(productService, times(1)).getProductById(productId);

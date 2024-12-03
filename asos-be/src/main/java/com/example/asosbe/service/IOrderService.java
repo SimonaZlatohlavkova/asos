@@ -10,5 +10,5 @@ public interface IOrderService {
 
     List<OrderResponse> getOrdersByUserId(Long userId);
 
-    void createOrder(OrderRequest orderRequest);
+    OrderResponse createOrder(OrderRequest orderRequest, Long userId);
 }

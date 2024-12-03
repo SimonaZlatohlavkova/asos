@@ -2,7 +2,7 @@ package com.example.asosbe.rest;
 
 import com.example.asosbe.exception.ErrorResponse;
 import com.example.asosbe.service.IDeliveryService;
-import com.example.asosbe.service.UserService;
+import com.example.asosbe.service.IUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class DeliveryController {
 
     private IDeliveryService iDeliveryService;
 
-    private final UserService userService;
+    private final IUserService userService;
 
     @GetMapping()
     public ResponseEntity<Object> getDelivery(@RequestHeader("Authorization") String jwt) {

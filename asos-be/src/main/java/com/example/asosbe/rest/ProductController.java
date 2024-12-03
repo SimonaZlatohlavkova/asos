@@ -2,14 +2,13 @@ package com.example.asosbe.rest;
 
 import com.example.asosbe.dto.ProductResponse;
 import com.example.asosbe.exception.ErrorResponse;
-import com.example.asosbe.service.UserService;
+import com.example.asosbe.service.IUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.asosbe.dto.ProductCartRequest;
 import com.example.asosbe.dto.ProductFilterRequest;
-import com.example.asosbe.model.Product;
 import com.example.asosbe.service.IProductService;
 
 import javax.security.auth.login.LoginException;
@@ -22,7 +21,7 @@ public class ProductController {
 
     private final IProductService productService;
 
-    private final UserService userService;
+    private final IUserService userService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getProduct(@PathVariable Long id, @RequestHeader("Authorization") String jwt) {

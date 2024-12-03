@@ -3,7 +3,7 @@ package com.example.asosbe.rest;
 import com.example.asosbe.dto.OrderRequest;
 import com.example.asosbe.exception.ErrorResponse;
 import com.example.asosbe.service.IOrderService;
-import com.example.asosbe.service.UserService;
+import com.example.asosbe.service.IUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +18,19 @@ public class OrderController {
 
     private IOrderService iOrderService;
 
-    private final UserService userService;
+    private final IUserService userService;
     @PostMapping()
     public ResponseEntity<Object> createOrder(@RequestBody OrderRequest orderRequest,
                                               @RequestHeader("Authorization") String jwt) {
+        Long userId = null;
         try{
-            userService.getUserIdByToken(jwt);
+            userId = userService.getUserIdByToken(jwt);
         }
         catch(LoginException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(e.getMessage(),
                     HttpStatus.UNAUTHORIZED.value(), e.getClass().getName()));
         }
-        iOrderService.createOrder(orderRequest);
-        return ResponseEntity.ok("Order created");
+        var order = iOrderService.createOrder(orderRequest, userId);
+        return ResponseEntity.ok().body(order);
     }
 }

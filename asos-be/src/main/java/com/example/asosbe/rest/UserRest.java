@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.asosbe.service.UserService;
+import com.example.asosbe.service.IUserService;
 
 import javax.security.auth.login.LoginException;
 
@@ -20,7 +20,7 @@ import javax.security.auth.login.LoginException;
 @AllArgsConstructor
 public class UserRest {
 
-    private final UserService userService;
+    private final IUserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@RequestBody UserRegistrationRequest registrationRequest) {

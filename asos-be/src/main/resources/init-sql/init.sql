@@ -53,6 +53,7 @@ CREATE TABLE "orders" (
 );
 
 CREATE TABLE "order_products" (
+  "id" SERIAL PRIMARY KEY,
   "order_id" integer,
   "product_id" integer,
   "quantity" integer NOT NULL DEFAULT 1,
