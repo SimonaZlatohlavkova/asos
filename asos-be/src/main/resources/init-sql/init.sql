@@ -1,5 +1,5 @@
 CREATE TABLE "users" (
-  "id" integer PRIMARY KEY,
+  "user_id" integer PRIMARY KEY,
   "name" varchar(50),
   "surname" varchar(100),
   "email" varchar(100) UNIQUE,
@@ -13,7 +13,6 @@ CREATE TABLE "products" (
   "url" varchar(524) NOT NULL,
   "description" varchar(1024),
   "original_price" numeric(10,2) NOT NULL,
-  "stock" integer,
   "created_at" timestamp
 );
 
@@ -63,7 +62,7 @@ CREATE TABLE "addresses" (
 
 ALTER TABLE "sales" ADD FOREIGN KEY ("product_id") REFERENCES "products" ("id");
 
-ALTER TABLE "orders" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "orders" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("user_id");
 
 ALTER TABLE "orders" ADD FOREIGN KEY ("address_id") REFERENCES "addresses" ("id");
 

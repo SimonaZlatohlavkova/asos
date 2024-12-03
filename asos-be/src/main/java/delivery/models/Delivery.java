@@ -1,4 +1,4 @@
-package products.models;
+package delivery.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,25 +14,18 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "products")
-public class Product {
+@Table(name = "deliveries")
+public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;
+    private Long deliveryId;
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
-    private String url;
-
-    private String description;
-
-    @Column(nullable = false)
-    private BigDecimal originalPrice;
-
-    private Long stock;
+    private BigDecimal price;
 
     private LocalDateTime createdAt;
 }
