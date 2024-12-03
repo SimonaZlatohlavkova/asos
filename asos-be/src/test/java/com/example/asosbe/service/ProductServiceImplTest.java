@@ -1,4 +1,4 @@
-package com.example.asosbe;
+package com.example.asosbe.service;
 
 import com.example.asosbe.dto.ProductCartRequest;
 import com.example.asosbe.dto.ProductFilterRequest;

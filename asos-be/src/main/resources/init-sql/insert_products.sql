@@ -141,7 +141,7 @@ VALUES
     (17, 25, 1.10, '2024-11-15 00:00:00', '2024-11-25 23:59:59', CURRENT_TIMESTAMP), -- Chips Lays Spicy
     (18, 30, 0.55, '2024-12-01 00:00:00', '2024-12-12 23:59:59', CURRENT_TIMESTAMP), -- Bubblegum Spearmint
     (19, 40, 3.90, '2024-11-20 00:00:00', '2024-11-30 23:59:59', CURRENT_TIMESTAMP), -- Coffee Aiello Classico
-    (20, 50, 0.75, '2024-11-25 00:00:00', '2024-12-05 23:59:59', CURRENT_TIMESTAMP) -- Snack Knoppers Coconut
+    (20, 50, 0.75, '2024-11-25 00:00:00', '2024-12-05 23:59:59', CURRENT_TIMESTAMP); -- Snack Knoppers Coconut
 
 INSERT INTO "deliveries" ("id", "name", "price", "created_at")
 VALUES

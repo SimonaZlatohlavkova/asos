@@ -1,4 +1,4 @@
-package com.example.asosbe;
+package com.example.asosbe.service;
 
 import com.example.asosbe.dto.AddressRequest;
 import com.example.asosbe.dto.OrderRequest;

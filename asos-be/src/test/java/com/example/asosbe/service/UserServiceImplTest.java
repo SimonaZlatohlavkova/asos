@@ -1,4 +1,4 @@
-package com.example.asosbe;
+package com.example.asosbe.service;
 
 import com.example.asosbe.dto.*;
 import com.example.asosbe.exception.NotFoundException;
@@ -47,7 +47,7 @@ class UserServiceImplTest {
 
     @Test
     void testRegisterUserSuccess() throws RegistrationException {
-        UserRegistrationRequest request = new UserRegistrationRequest("test@example.com", "StrongPass123@", "John", "Doe");
+        UserRegistrationRequest request = new UserRegistrationRequest("Janko", "Testovic", "test@example.com", "StrongPass123@");
 
         when(userRepository.findByEmail(request.getEmail())).thenReturn(Optional.empty());
         when(bCryptPasswordEncoder.encode(request.getPassword())).thenReturn("hashedPassword");

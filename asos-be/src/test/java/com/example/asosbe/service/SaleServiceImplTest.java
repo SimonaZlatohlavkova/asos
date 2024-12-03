@@ -1,4 +1,4 @@
-package com.example.asosbe;
+package com.example.asosbe.service;
 
 import com.example.asosbe.model.Product;
 import com.example.asosbe.model.Sale;
