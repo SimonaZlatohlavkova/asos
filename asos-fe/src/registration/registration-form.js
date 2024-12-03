@@ -39,18 +39,9 @@ export const RegistrationForm = () => {
             const newPassword = values.password;
             const hashedPassword = sha1(newPassword).toUpperCase();
             try {
-                const response = await fetch(`https://api.pwnedpasswords.com/range/${hashedPassword.substring(0, 5)}`);
-                const data = await response.text();
-                const compromisedPasswords = data.split('\n').map((line) => line.split(':')[0]);
-                const invalid = compromisedPasswords.includes(hashedPassword.substring(5));
+                setChecked(true);
+                await postToBE(values);
 
-                if (!invalid) {
-                    setChecked(true);
-                    await postToBE(values);
-                } else {
-                    toast.error('This password is in public lists of passwords leaked from other sites.');
-                    setChecked(false);
-                }
             } catch (error) {
                 toast.error('Error checking password');
             }
@@ -59,7 +50,7 @@ export const RegistrationForm = () => {
 
     const postToBE = async (values) => {
         try {
-            const response = await fetch(url + '/api/signup', {
+            const response = await fetch('http://localhost:8088/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -90,14 +81,17 @@ export const RegistrationForm = () => {
             justifyContent="center"
             style={{minHeight: '100vh', width: '100%'}}
         >
-            <Grid item xs={12} sm={12} md={12} >
-                <Paper elevation={3} style={{padding: '30px', borderRadius: '10px', marginTop:'15%'}}>
+            <Grid item xs={12} sm={12} md={12}>
+                <Paper elevation={3} style={{padding: '30px', borderRadius: '10px', marginTop: '15%'}}>
                     <form onSubmit={formik.handleSubmit}>
                         <Grid container spacing={2} direction="column" alignItems="center">
-                                <Grid item xs={1} md={1} lg={1}  sx={{alignItems:'center',
-                                    justifyContent: 'center', justifySelf:'center', alignSelf:'center'}}>
-                                    <img src={logo} alt="Logo" style={{height: 40, paddingTop:'15%',paddingBottom:'15%'}}/>
-                                </Grid>
+                            <Grid item xs={1} md={1} lg={1} sx={{
+                                alignItems: 'center',
+                                justifyContent: 'center', justifySelf: 'center', alignSelf: 'center'
+                            }}>
+                                <img src={logo} alt="Logo"
+                                     style={{height: 40, paddingTop: '15%', paddingBottom: '15%'}}/>
+                            </Grid>
 
                             <Grid item xs={12} md={12}>
                                 <TextField

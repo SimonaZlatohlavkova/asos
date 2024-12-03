@@ -27,10 +27,8 @@ export const SignInForm = () => {
             },
             validationSchema: validationSchema,
             onSubmit: async (values) => {
-                const response = await fetchWithRateLimitsNoToken(values, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "login", navigate)
+                const jsonData = await fetchWithRateLimitsNoToken(values, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "login", navigate)
                 console.log("response from BE")
-                console.log(response)
-                const jsonData = response.json();
                 console.log(jsonData)
                 if (jsonData) {
                     setCookie('auth', jsonData.jwt, 30)

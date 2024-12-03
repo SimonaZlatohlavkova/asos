@@ -26,8 +26,9 @@ import * as Yup from 'yup';
 import {type} from "@testing-library/user-event/dist/type";
 import {string} from "yup";
 import {fetchWithRateLimit} from "../fetch-with-rate-limits";
-import {setCookie} from "../App";
+import {getCookie, setCookie} from "../App";
 import {useNavigate} from "react-router-dom";
+import {fetchWithRateLimitsGET} from "../fetch-with-rate-limits-get";
 
 const validationSchema = Yup.object({
     street: Yup.string().required('Street Address is required'),
@@ -64,17 +65,55 @@ export const CartPage = () => {
     const [loadedPage, setLoaded] = useState(false);
     const [adress, setAdress] = useState({})
     const [selectedDelivery, setSelectedDelivery] = useState(null)
-    const [deliveryTypes, setDeliveryTypes] = useState(dummyDelivery)
+    const [deliveryTypes, setDeliveryTypes] = useState([])
     const [selected, setSelected] = useState(null);
 
     const [requestCount, setRequestCount] = useState(0)
     const [lastRequestTime, setLastRequestTime] = useState(0)
     const navigate = useNavigate()
 
+    const token = getCookie('auth');
     useEffect(() => {
-        dispatch(updateCartItems(dummyProducts));
-        setLoaded(true);
+        if (token == null) {
+            navigate("/home")
+        }
     }, []);
+
+    useEffect( () => {
+        console.log("USEeFFECT")
+        let productIds = [];
+        cart.forEach(item => {
+            productIds.push(item.id);
+        });
+        const requestBody = {
+            productIds: productIds
+        };
+        console.log(productIds)
+        fetchData(requestBody)
+        fetchDelivery()
+        console.log("LOADED")
+        setLoaded(true);
+
+    }, []);
+
+    const fetchData=async (requestBody) => {
+
+        const response = await fetchWithRateLimit(requestBody, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "product/cart", navigate)
+        console.log("response from BE DATA ")
+        console.log(response)
+        dispatch(updateCartItems(response))
+
+    }
+
+    const fetchDelivery=async () => {
+        const response = await fetchWithRateLimitsGET(lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "delivery", navigate)
+        console.log("response from BE DELIVERY")
+        console.log(response)
+        setDeliveryTypes(response)
+
+    }
+
+
 
     const [activeStep, setActiveStep] = useState(0);
 
@@ -118,6 +157,7 @@ export const CartPage = () => {
         const body={
             deliveryId: selectedDelivery,
             address:{
+                city: adress.city,
                 street: adress.street,
                 houseNumber: adress.houseNumber,
                 postCode: adress.postCode,

@@ -40,7 +40,7 @@ export const fetchWithRateLimitsGET= async (lastRequestTime, setLastRequestTime,
                         toast.error(jsonData.message)
                     }
                 } else {
-                    resolve(response)
+                    resolve(jsonData)
                 }
             } catch (error) {
                 if (error instanceof Error) {

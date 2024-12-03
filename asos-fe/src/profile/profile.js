@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 import accountLogo from "../account-circle-svgrepo-com (1).svg";
-import {removeCookie} from "../App";
+import {getCookie, removeCookie} from "../App";
 import {useNavigate} from "react-router-dom";
 import {fetchWithRateLimitsGET} from "../fetch-with-rate-limits-get";
 const dummyProfile={
@@ -19,6 +19,13 @@ export const Profile = () => {
     const [profile, setProfile]=useState(dummyProfile)
     const [requestCount, setRequestCount] = useState(0)
     const [lastRequestTime, setLastRequestTime] = useState(0)
+    const token = getCookie('auth');
+    useEffect(() => {
+        if (token == null) {
+            navigate("/home")
+        }
+    }, []);
+
     const handleSignOut = () => {
         removeCookie('auth');
         navigate('/signin');
@@ -29,10 +36,8 @@ export const Profile = () => {
     }, []);
 
     const fetchData=async () => {
-        const response = await fetchWithRateLimitsGET(lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "user/profile", navigate)
-        console.log("response from BE")
-        console.log(response)
-        const jsonData = await response.json()
+        const jsonData= await fetchWithRateLimitsGET(lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "api/profile", navigate)
+
         if (jsonData) {
             setProfile(jsonData)
         }

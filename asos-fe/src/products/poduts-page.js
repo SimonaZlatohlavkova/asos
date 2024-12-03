@@ -81,7 +81,7 @@ export const ProductsPage = () => {
     const [disabledButton, setDisabledButton] = useState(true);
     const [requestCount, setRequestCount] = useState(0)
     const [lastRequestTime, setLastRequestTime] = useState(0)
-    const [searchedProducts, setSearchedProducts] = useState(dummyProducts)
+    const [searchedProducts, setSearchedProducts] = useState([])
     const navigate = useNavigate()
     const token = getCookie('auth');
     const [loaded, setLoaded] = useState(false);
@@ -101,10 +101,8 @@ export const ProductsPage = () => {
         onSubmit: async (values) => {
             console.log("Form Submitted with values:", values);
 
-            const response = await fetchWithRateLimit(values, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "product/filter", navigate)
-            console.log("response from BE")
-            console.log(response)
-            const jsonData = await response.json()
+            const jsonData = await fetchWithRateLimit(values, lastRequestTime, setLastRequestTime, setRequestCount, requestCount, "product/filter", navigate)
+
             if (jsonData) {
                 setSearchedProducts(jsonData)
             }
