@@ -29,6 +29,7 @@ export const Profile = () => {
     const handleSignOut = () => {
         removeCookie('auth');
         navigate('/signin');
+        window.location.reload();
     };
 
     useEffect(() => {

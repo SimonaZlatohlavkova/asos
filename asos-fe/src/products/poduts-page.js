@@ -1,4 +1,4 @@
-import {Box, Button, Grid, InputAdornment, TextField} from "@mui/material";
+import {Box, Button, Grid, InputAdornment, TextField, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {useFormik} from "formik";
 import SearchIcon from '@mui/icons-material/Search';
@@ -173,6 +173,18 @@ export const ProductsPage = () => {
                             <ProductCard key={prod.id} product={prod}></ProductCard>
                         </Grid>
                     })}
+                    {searchedProducts.length===0&&
+                        <Typography
+                            variant="h4" // Larger font size
+                            color="secondary" // Secondary color
+                            sx={{
+                                alignSelf: "center",
+                                fontWeight: 'bold', // Emphasizes the text
+                                padding: '20px', // Adds padding for a cleaner look
+                            }}
+                        >
+                            Search for products you like.
+                        </Typography>}
                 </Grid>
 
             </Box>

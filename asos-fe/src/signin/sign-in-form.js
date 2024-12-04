@@ -32,7 +32,9 @@ export const SignInForm = () => {
                 console.log(jsonData)
                 if (jsonData) {
                     setCookie('auth', jsonData.jwt, 30)
+
                     navigate("/products/search")
+                    window.location.reload();
                 }
             }
         });
