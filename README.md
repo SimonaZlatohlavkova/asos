@@ -32,6 +32,9 @@ Tieto moduly sa spúšťajú samostatne, nižšie je uvedený postup.
   1. spustiť pomocou tlačidla v súbore docker-compose.yml v asos-be module
   2. v termináli sa prepnúť do asos-be priečinka a spustiť príkaz docker compose up --build
 
+### DB model
+![DB model](asos-be/src/main/java/com/example/asosbe/asos.png)
+
 ### Pripojenie na DB (nie je nutné pre fungovanie aplikácie)
 - v Idei je možné sa pripojiť na DB a vidieť jej obsah
 - v záložke Database vybrať PostgreSQL a pripojiť sa pomocou credentials uvedených v docker-compose.yml 
