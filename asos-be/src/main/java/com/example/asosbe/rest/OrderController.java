@@ -22,7 +22,7 @@ public class OrderController {
     @PostMapping()
     public ResponseEntity<Object> createOrder(@RequestBody OrderRequest orderRequest,
                                               @RequestHeader("Authorization") String jwt) {
-        Long userId = null;
+        Long userId;
         try{
             userId = userService.getUserIdByToken(jwt);
         }
