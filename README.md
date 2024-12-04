@@ -77,18 +77,7 @@ alebo application.properties
 - JAVA  Amazon Corretto 17.0.9
 - Docker desktop https://www.docker.com/products/docker-desktop/
 
-## Udržiavanie a verziovanie projektu
-
-### GITHUB
-- hlavná vetva MASTER
-- vždy vytvárať nové vetvy pre tasky
-- v prípade, že chceme zmeny mergnúť do main, VŽDY treba najskôr mergnúť MAster do Vetvy, pushnúť a až potom mergnúť vetvu do MASTER
-- v prípade potreby vytvárať pull requesty (možnosť skontrolovať kód ostatnými, nechať komentár, automatické zobrazenie či nastáva konflikt s MASTER vetvou)
-- vždy si pred prácou najskôr updatenuť MASTER
-- zmysluplné  commit message
-- zrozumiteľné názvy class, premenných, packageov, funkcií
-
-#### Zoznam hlavných kategórií produktov
+## Zoznam hlavných kategórií produktov
 - Yogurt
 - Milk
 - Drink
