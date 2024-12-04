@@ -28,7 +28,7 @@ export const Profile = () => {
 
     const handleSignOut = () => {
         removeCookie('auth');
-        navigate('/signin');
+        navigate('/home');
         window.location.reload();
     };
 
