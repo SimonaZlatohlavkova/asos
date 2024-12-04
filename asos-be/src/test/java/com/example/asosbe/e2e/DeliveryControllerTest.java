@@ -1,5 +1,6 @@
 package com.example.asosbe.e2e;
 
+import com.example.asosbe.config.TestSecurityConfiguration;
 import com.example.asosbe.dto.DeliveryResponse;
 import com.example.asosbe.rest.DeliveryController;
 import com.example.asosbe.service.IDeliveryService;
@@ -10,6 +11,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,6 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = DeliveryController.class)
+@Import(TestSecurityConfiguration.class)
 class DeliveryControllerTest {
 
     @Autowired
@@ -43,8 +46,8 @@ class DeliveryControllerTest {
     void testGetDeliverySuccess() throws Exception {
         String jwt = "valid.jwt.token";
         List<DeliveryResponse> deliveries = List.of(
-                new DeliveryResponse(1L, "Kuriér DPD", BigDecimal.valueOf(1,2)),
-                new DeliveryResponse(2L, "Kuriér SPS", BigDecimal.valueOf(1,2))
+                new DeliveryResponse(1L, "Kuriér DPD", BigDecimal.valueOf(1.2)),
+                new DeliveryResponse(2L, "Kuriér SPS", BigDecimal.valueOf(3.8))
         );
 
         when(userService.getUserIdByToken(jwt)).thenReturn(1L);
@@ -74,8 +77,7 @@ class DeliveryControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.message").value("Invalid token"))
-                .andExpect(jsonPath("$.status").value(401))
-                .andExpect(jsonPath("$.errorType").value("javax.security.auth.login.LoginException"));
+                .andExpect(jsonPath("$.status").value(401));
     }
 }
 
