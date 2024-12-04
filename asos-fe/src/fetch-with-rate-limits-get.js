@@ -35,6 +35,7 @@ export const fetchWithRateLimitsGET= async (lastRequestTime, setLastRequestTime,
 
                 if (!response.ok) {
                     if (response.status === 401) {
+                        toast.error("You are not authenticated")
                         navigate("/signin")
                     } else {
                         toast.error(jsonData.message)
