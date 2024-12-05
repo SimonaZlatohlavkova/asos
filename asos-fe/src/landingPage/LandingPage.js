@@ -37,7 +37,11 @@ export const LandingPage = () => {
                         </Grid>
 
                         <Grid item xs={12} md={12} lg={12}>
-                            <Button variant="contained" fullWidth={true} color="secondary"
+                            <Button variant="contained" color="secondary"
+                                    sx={{
+                                        alignItems: 'center',
+                                        width:'140px',}
+                                        }
                                     onClick={() => {
                                         navigate("/signin")
                                     }}>

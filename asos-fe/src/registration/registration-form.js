@@ -193,7 +193,7 @@ export const RegistrationForm = () => {
                             </Grid>
 
                             <Grid item xs={12} md={12}>
-                                <Button type="submit" fullWidth={true} variant="contained">
+                                <Button type="submit" color="secondary" fullWidth={true} variant="contained">
                                     Submit registration
                                 </Button>
                             </Grid>
